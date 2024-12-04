@@ -1,0 +1,70 @@
+.products-page {
+    display: flex;
+    gap: 20px;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.products-container {
+    flex: 1;
+}
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.category-filters, .presentation-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-filter, .presentation-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.presentation-section {
+    margin-top: 10px;
+}
+
+.presentation-section h4 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+/* Add styling for filter bar */
+.filter-bar {
+    margin-bottom: 20px;
+}
+
+.filter-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.filter-bar select {
+    padding: 5px;
+    font-size: 1em;
+}
+
+
+

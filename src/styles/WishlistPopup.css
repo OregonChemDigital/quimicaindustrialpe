@@ -1,0 +1,42 @@
+.wishlist-popup {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.wishlist-popup h2 {
+    margin: 0;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.wishlist-popup ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.wishlist-popup li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.wishlist-popup button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.wishlist-popup-container {
+    position: relative;
+}

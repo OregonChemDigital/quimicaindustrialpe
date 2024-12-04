@@ -1,0 +1,184 @@
+.quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%; /* Set width to 100% */
+  max-width: 850px; /* Optional: limit max width */
+  margin: auto; /* Center the form horizontally */
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-section {
+  display: flex;
+  flex-direction: column; /* Or row if you want inline */
+  gap: 15px;
+}
+
+.product-inputs {
+  flex: 1; /* Allow inputs to take up all available space */
+  display: flex; /* Keep inputs aligned in a row */
+  gap: 10px; /* Space between inputs */
+}
+
+.product-row {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space between inputs and button */
+  margin-bottom: 10px; /* Adjust spacing between product rows */
+}
+
+.remove-button {
+  background-color: #e74c3c; /* Red color for the button */
+  color: white;
+  border: 2px solid #5500FF;
+  font-size: 12px;
+  /* border: none; */
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  min-width: 35px; /* Set a min-width for consistent button size */
+  margin-left: 10px;
+}
+
+.product-inputs {
+  display: flex;
+  flex: 1; /* Take up the remaining space */
+  gap: 10px; /* Space between the inputs/selects */
+}
+
+.product-inputs input,
+.product-inputs select {
+  flex: 1; /* Allow input/select to grow equally */
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #5500FF;
+  background-color: #fff;
+}
+
+.product-inputs input,
+.product-inputs select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #5500FF;
+    background-color: #fff;
+}
+
+.product-row input,
+.product-row select {
+  flex: 1; /* Allow input/select to grow equally */
+  min-width: 120px; /* Optional: set a min width */
+}
+
+.product-section input,
+.product-section select,
+.client-section select,
+.add-product {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #5500FF;
+  background-color: #fff;
+  color: #5500FF;
+}
+
+.remove-product {
+  background-color: transparent;
+  border: none;
+  color: #e74c3c; /* Red color for the delete button */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px; /* Space between button and input */
+}
+
+.add-product {
+  background-color: #5500FF;
+  color: white;
+  cursor: pointer;
+}
+
+.client-section {
+  margin-top: 20px;
+}
+
+.client-type {
+  margin-bottom: 20px;
+}
+
+.client-type label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.client-info input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #5500FF;
+  background-color: #fff;
+}
+
+.contact-method {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.contact-method button {
+  flex: 1;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 2px solid #5500FF;
+  background: none;
+  color: #5500FF;
+  cursor: pointer;
+}
+
+.contact-method button.active {
+  background-color: #5500FF;
+  color: white;
+}
+
+.observations textarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid #5500FF;
+  background-color: #fff;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+}
+
+.terms input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #5500FF;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #357abd;
+}
