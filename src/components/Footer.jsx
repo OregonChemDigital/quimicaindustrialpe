@@ -7,7 +7,7 @@ const Footer = () => {
             <footer>
                 <div>
                     <a href="/" target="_blank">
-                        <img className="logo" src={Logo.src} alt="Logo Química Industrial 2024" />
+                        <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
                     </a>
                 </div>
                 <div>
@@ -24,7 +24,7 @@ const Footer = () => {
                             Google Firebase
                         </a>
                     </p>
-                    <p>© 2016 - 2024 Química Industrial by Oregon Chem Group</p>
+                    <p>© 2016 - 2025 Química Industrial by Oregon Chem Group</p>
                 </div>
             </footer>
         </>

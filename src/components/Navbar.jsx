@@ -17,7 +17,7 @@ const Navbar = () => {
         <nav>
             <div>
                 <Link to="/">
-                    <img className="logo" src={Logo.src} alt="Logo Química Industrial 2024" />
+                    <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
                 </Link>
             </div>
             <div>

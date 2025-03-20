@@ -23,4 +23,3 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
 };
 
 export default ProductPopup;
-

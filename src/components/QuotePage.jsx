@@ -99,7 +99,7 @@ const QuotePage = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/quotes', {
+            const response = await fetch('https://oregonchem-backend.onrender.com/api/public/quotes', { // Ensure the correct URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -174,7 +174,6 @@ const QuotePage = () => {
                             </button>
                         </div>
                     ))}
-
                     <button type="button" className="add-product" onClick={handleAddProductRow}>
                         Agregar Más Productos
                     </button>
