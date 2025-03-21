@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../assets/qiLogo.png";
+import "../styles/Footer.css";
 
 const Footer = () => {
     return (

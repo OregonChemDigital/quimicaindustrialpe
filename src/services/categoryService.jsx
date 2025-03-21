@@ -5,7 +5,7 @@ import "../styles/CategoryCard.css";
 // Add a new function to fetch categories for the sidebar
 export const fetchCategories = async () => {
   try {
-    const response = await fetch("https://oregonchem-backend.onrender.com/api/public/categorias");
+    const response = await fetch("http://localhost:5001/api/public/categorias");
     const data = await response.json();
     return data;
   } catch (error) {

@@ -1,6 +1,6 @@
 export const fetchPresentations = async () => {
     try {
-        const response = await fetch("https://oregonchem-backend.onrender.com/api/public/presentaciones");
+        const response = await fetch("http://localhost:5001/api/public/presentaciones");
         const data = await response.json();
         return data;
     } catch (error) {

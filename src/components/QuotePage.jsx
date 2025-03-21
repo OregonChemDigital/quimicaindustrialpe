@@ -99,7 +99,7 @@ const QuotePage = () => {
         };
 
         try {
-            const response = await fetch('https://oregonchem-backend.onrender.com/api/public/quotes', { // Ensure the correct URL
+            const response = await fetch('http://localhost:5001/api/public/quotes', { // Ensure the correct URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

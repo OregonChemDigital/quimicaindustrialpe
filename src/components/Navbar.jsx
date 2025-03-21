@@ -4,6 +4,7 @@ import Logo from "../assets/qiLogo.png";
 import { FaHeart } from 'react-icons/fa';
 import WishlistPopup from "./WishlistPopup";
 import { useWishlist } from "../contexts/WishlistContext";
+import "../styles/Navbar.css";
 
 const Navbar = () => {
     const [showWishlist, setShowWishlist] = useState(false);
@@ -14,12 +15,11 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
-            <div>
-                <Link to="/">
-                    <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
-                </Link>
-            </div>
+        <nav className={window.location.pathname === "/" ? "navbar-home" : "navbar-default"}>            <div>
+            <Link to="/">
+                <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
+            </Link>
+        </div>
             <div>
                 <ul className="nav-list">
                     <li><Link to="/inicio">Inicio</Link></li>

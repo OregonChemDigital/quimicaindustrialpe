@@ -1,0 +1,154 @@
+.hero {
+  background: url('../assets/homePageImage1.png') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* Align content to the left */
+  text-align: left;
+  /* Align text to the left */
+  min-height: 50vh;
+  color: white;
+  padding: 100px 50px;
+  text-shadow: 1px 1px 2px #3C3A3E;
+  border-radius: 20px;
+  margin: 65px auto;
+  margin-top: 80px;
+  max-width: 1200px;
+  position: relative;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content {
+  text-align: left;
+  max-width: 600px;
+  margin: 0;
+  padding: 20px;
+}
+
+.hero .cta-button {
+  display: inline-block;
+  /* Ensures button follows text alignment */
+  margin-top: 20px;
+  /* Adds spacing between text and button */
+  background-color: #f02424;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.hero .cta-button:hover {
+  background-color: #d02020;
+}
+
+/* About Section */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 20px;
+  color: black;
+}
+
+.about .text {
+  flex: 1;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+.about .button {
+  background-color: #f02424;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 20px;
+}
+
+.about .button:hover {
+  background-color: #d02020;
+}
+
+/* Featured Section */
+.featured {
+  display: flex;
+  background: #333;
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.featured .text {
+  flex: 1;
+  padding: 20px;
+}
+
+.featured .image {
+  flex: 1;
+  background: url('../assets/homePageAboutUsImage.png') no-repeat center center/cover;
+  border-radius: 20px;
+  height: 300px;
+}
+
+/* Categories Grid */
+.categories {
+  max-width: 1200px;
+  margin: 40px auto;
+  color: black;
+}
+
+.categories .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.category {
+  background: #ddd;
+  height: 300px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.categories .btn {
+  display: block;
+  text-align: center;
+  width: fit-content;
+  margin: 20px auto;
+}
+
+/* Contact Section */
+.contact {
+  background: url('../assets/homePageContactUsImage.png') no-repeat center center/cover;
+  color: white;
+  padding: 100px 50px;
+  border-radius: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+  text-align: left;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content,
+.featured .text,
+.contact .text {
+  max-width: 600px; 
+  margin-left: 50px; 
+}
+
+.background-effect {
+  position: absolute;
+  left: 0;
+  top: -200px;
+  width: auto;
+  height: 1200px;
+}

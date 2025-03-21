@@ -1,4 +1,5 @@
 import { SocialIcon } from "react-social-icons";
+import "../styles/ContactPage.css";
 
 const ContactPage = () => {
     return (
@@ -16,7 +17,7 @@ const ContactPage = () => {
                         referrerPolicy="no-referrer-when-downgrade"
                     ></iframe>
                 </div>
-                <div>
+                <div className="contact-info">
                     <h4>Dirección</h4>
                     <p>Jr. Dante 236, Lima 15047, Perú</p>
                     <h4>Horas</h4>

@@ -8,7 +8,7 @@ const BannerData = () => {
     useEffect(() => {
         const fetchBanners = async () => {
             try {
-                const response = await fetch("https://oregonchem-backend.onrender.com/api/public/banners?site=site1");
+                const response = await fetch("http://localhost:5001/api/public/banners?site=site1");
                 const data = await response.json();
                 setBanners(data);
             } catch (error) {

@@ -1,6 +1,6 @@
 export const fetchProducts = async () => {
     try {
-        const response = await fetch("https://oregonchem-backend.onrender.com/api/public/productos");
+        const response = await fetch("http://localhost:5001/api/public/productos");
         const data = await response.json();
         console.log("Fetched data structure:", data);
 
