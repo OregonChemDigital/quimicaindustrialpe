@@ -1,8 +1,4 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 100px 20px;
-}
+@import url('./variables.css');
 
 h2 {
     font-size: 32px;
@@ -29,8 +25,7 @@ h2 {
 iframe {
     width: 600px;
     height: 400px;
-
-    border-radius: 8px;
+    border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -38,7 +33,7 @@ iframe {
 .contact-info {
     flex: 1;
     max-width: 50%;
-    text-align: left;
+    text-align: right;
 }
 
 h4 {
@@ -61,12 +56,24 @@ h4 {
     margin-top: 20px;
 }
 
-.social-icons a {
+.social-icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     transition: transform 0.3s ease-in-out;
 }
 
-.social-icons a:hover {
+.social-icon-button:hover {
     transform: scale(1.2);
+}
+
+.social-icon-button .react-social-icons {
+    border-radius: 50%;
+    overflow: hidden;
+    background: none;
+    border: none;
+    box-shadow: none;
 }
 
 /* Responsive Design */
@@ -75,6 +82,14 @@ h4 {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        margin-top: 75px;
+    }
+
+    iframe {
+        width: 300px;
+        height: 400px;
+        border-radius: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .contact-container .map-container,
@@ -87,6 +102,9 @@ h4 {
     }
 
     .social-icons {
-        align-items: center;
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        margin-top: 20px;
     }
 }

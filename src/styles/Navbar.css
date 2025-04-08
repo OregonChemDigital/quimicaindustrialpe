@@ -1,29 +1,17 @@
+@import url('./variables.css');
+
+.navbar-container {
+  width: 100%;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1170px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 10px 0px;
-}
-
-.navbar-home {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: transparent;
-  color: black;
-  z-index: 10;
-}
-
-.navbar-default {
-  position: static;
-  background: black;
-  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  width: 95%;
+  margin: auto;
+  padding: 20px 0;
 }
 
 .navbar-home .nav-list li a {
@@ -47,19 +35,17 @@ nav {
 .navbar-home .nav-list li a:hover {
   color: #d02020;
   transform: scale(1.2);
-  /* Change color when hovering */
 }
 
 /* Ensures correct hover behavior for navbar-default */
 .navbar-default .nav-list li a:hover {
-  color: #f5f5f5;
+  color: #d02020;
   transform: scale(1.2);
-  /* White text hover effect on black background */
 }
 
 .nav-list li a {
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .navbar-home li a {
@@ -84,15 +70,104 @@ nav {
   font-size: 30px;
   cursor: pointer;
   margin-right: 20px;
-  transition: transform 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
 .heart-icon:hover {
   color: #d02020;
-  transform: scale(1.2);
+  animation: heartbeat 3s;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.navbar-hr {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  background: linear-gradient(to right, transparent, #ccc, transparent);
+  margin: -10px;
+}
+
+/* Mobile Bottom Navbar */
+.mobile-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 1000;
+  opacity: 0.95;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 1000;
+  opacity: 0.95;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mobile-logo {
+  width: 150px;
+  margin-left: 35px;
+  height: auto;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.nav-icon {
+  font-size: 20px;
+  color: #333;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-icon:hover {
+  color: #d02020;
+}
+
+.logo-short {
+  width: 40px;
+  height: auto;
 }
 
 @media (max-width: 768px) {
+  .navbar-container {
+    display: none;
+    
+  }
   nav {
     flex-direction: column;
     align-items: center;

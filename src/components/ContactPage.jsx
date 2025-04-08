@@ -1,39 +1,121 @@
+import { useState, useEffect } from 'react';
 import { SocialIcon } from "react-social-icons";
+import { trackPageView, safeLogEvent } from '../utils/analytics';
 import "../styles/ContactPage.css";
 
 const ContactPage = () => {
-    return (
-        <div className="container">
-            <h2>Contáctanos</h2>
-            <div className="contact-container">
-                <div>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.9152160887134!2d-77.02256539999999!3d-12.117953399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8101aa54473%3A0x2b212b1faca265d6!2sJr.%20Dante%20236%2C%20Lima%2015047!5e0!3m2!1sen!2spe!4v1723852188797!5m2!1sen!2spe"
-                        width="500"
-                        height="400"
-                        style={{ border: 0 }}
-                        allowFullScreen="yes"
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
-                </div>
-                <div className="contact-info">
-                    <h4>Dirección</h4>
-                    <p>Jr. Dante 236, Lima 15047, Perú</p>
-                    <h4>Horas</h4>
-                    <p>Lunes - Viernes: 8am - 6pm</p>
-                    <h4>Contacto</h4>
-                    <p>Teléfono: +511 644 0141</p>
-                    <p>Whatsapp: +511 961 555 000</p>
-                    <p>Correo electrónico: contacto@quimicaindustrial.pe</p>
-                </div>
-                <div className="social-icons">
-                    <SocialIcon network="whatsapp" />
-                    <SocialIcon network="facebook" />
-                    <SocialIcon network="instagram" />
-                    <SocialIcon network="email" />
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-                </div>
+    useEffect(() => {
+        const loadPage = async () => {
+            try {
+                setIsLoading(true);
+                trackPageView('Contact Page');
+            } catch (err) {
+                setError('Error loading contact information');
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Contact page error:', err);
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadPage();
+    }, []);
+
+    const contactInfo = {
+        address: "Jr. Dante 236, Lima 15047, Perú",
+        hours: "Lunes - Viernes: 8am - 6pm",
+        phone: "+511 644 0141",
+        whatsapp: "+511 961 555 000",
+        email: "contacto@quimicaindustrial.pe"
+    };
+
+    const socialLinks = [
+        { network: "whatsapp", url: `https://wa.me/${contactInfo.whatsapp.replace(/\D/g, '')}` },
+        { network: "facebook", url: "https://facebook.com/quimicaindustrialpe" },
+        { network: "instagram", url: "https://instagram.com/quimicaindustrialpe" },
+        { network: "email", url: `mailto:${contactInfo.email}` }
+    ];
+
+    const handleSocialClick = (network, url) => {
+        safeLogEvent('social_click', {
+            network,
+            page: 'contact'
+        });
+        window.open(url, '_blank', 'noopener,noreferrer');
+    };
+
+    const renderMap = () => (
+        <div className="map-container">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.9152160887134!2d-77.02256539999999!3d-12.117953399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8101aa54473%3A0x2b212b1faca265d6!2sJr.%20Dante%20236%2C%20Lima%2015047!5e0!3m2!1sen!2spe!4v1723852188797!5m2!1sen!2spe"
+                width="500"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación de Química Industrial Perú"
+                aria-label="Mapa de ubicación"
+            />
+        </div>
+    );
+
+    const renderSocialIcons = () => (
+        <div className="social-icons" role="navigation" aria-label="Redes sociales">
+            {socialLinks.map(({ network, url }) => (
+                <button
+                    key={network}
+                    className="social-icon-button"
+                    onClick={() => handleSocialClick(network, url)}
+                    aria-label={`${network} de Química Industrial Perú`}
+                >
+                    <SocialIcon network={network} />
+                </button>
+            ))}
+        </div>
+    );
+
+    const renderContactInfo = () => (
+        <div className="contact-info">
+            <h4>Dirección</h4>
+            <p>{contactInfo.address}</p>
+            <h4>Horas</h4>
+            <p>{contactInfo.hours}</p>
+            <h4>Contacto</h4>
+            <p>Teléfono: {contactInfo.phone}</p>
+            <p>Whatsapp: {contactInfo.whatsapp}</p>
+            <p>Correo electrónico: {contactInfo.email}</p>
+        </div>
+    );
+
+    if (error) {
+        return (
+            <div className="error-container" role="alert">
+                <h2>Error</h2>
+                <p>{error}</p>
+                <button onClick={() => setError(null)}>Try Again</button>
+            </div>
+        );
+    }
+
+    if (isLoading) {
+        return (
+            <div className="loading-container" role="status">
+                <p>Loading contact information...</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="container" role="main">
+            <div className="contact-container">
+                {renderMap()}
+                {renderSocialIcons()}
+                {renderContactInfo()}
             </div>
         </div>
     );

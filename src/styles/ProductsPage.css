@@ -1,0 +1,217 @@
+@import url('./variables.css');
+
+.products-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.content-layout {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Sidebar */
+.sidebar {
+    background: transparent;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 20px;
+    color: black;
+}
+
+
+.sidebar h4 {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/* Filters */
+.category-filters,
+.presentation-filters {
+    margin-top: 20px;
+}
+
+.category-filters h3,
+.presentation-filters h3 {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.category-filter,
+.presentation-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.category-filter input,
+.presentation-filter input {
+    cursor: pointer;
+}
+
+/* "Instructions" + Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.filter-header {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+}
+
+.filter-bar select {
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    font-size: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    font-size: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Cards */
+.product-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    border-radius: 10px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+    background: transparent;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: filter 0.3s ease-in-out;
+}
+
+/* Blur effect on image hover */
+.product-image:hover {
+    filter: blur(4px);
+
+}
+
+/* Eye icon overlay */
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Show the eye icon on hover */
+.image-container:hover .eye-icon {
+    opacity: 1;
+}
+
+
+/* Ensure all buttons and text are aligned */
+.product-card h2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    min-height: 20px;
+    /* Ensures all titles align */
+}
+
+.product-card p {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin: 5px 0;
+}
+
+/* Improve readability of presentations */
+.product-card p strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-primary);
+    /* Adjust color for better contrast */
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    /* Fixed height for all images */
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    transition: filter 0.3s ease-in-out;
+}
+
+.image-container:hover .product-image {
+    filter: blur(4px);
+}
+
+/* Buttons */
+.btn-primary {
+    margin-top: auto;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-container {
+    margin-top: 60px;
+    margin-bottom: 60px
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+    .content-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .product-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .product-cards-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

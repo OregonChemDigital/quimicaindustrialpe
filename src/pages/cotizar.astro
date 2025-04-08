@@ -1,10 +1,10 @@
 ---
-import ClientApp from '../App';
+import { ClientApp } from '../App.jsx';
 
 // SEO metadata
-const title = "Química Industrial - Inicio";
-const description = "Somos una empresa líder en la distribución de productos químicos industriales en Perú. Ofrecemos soluciones químicas de alta calidad para diversas industrias.";
-const canonicalUrl = "https://quimicaindustrialpe.com";
+const title = "Química Industrial - Cotizar";
+const description = "Solicita una cotización personalizada para nuestros productos químicos industriales. Nuestro equipo te responderá a la brevedad.";
+const canonicalUrl = "http://localhost:4321/cotizar";
 ---
 
 <!DOCTYPE html>
@@ -47,18 +47,14 @@ const canonicalUrl = "https://quimicaindustrialpe.com";
 		<script type="application/ld+json">
 			{JSON.stringify({
 				"@context": "https://schema.org",
-				"@type": "Organization",
-				"name": "Química Industrial",
+				"@type": "WebPage",
+				"name": "Cotizar",
 				"url": canonicalUrl,
-				"description": description,
-				"address": {
-					"@type": "PostalAddress",
-					"addressCountry": "PE"
-				}
+				"description": description
 			})}
 		</script>
 	</head>
 	<body>
 		<ClientApp client:only="react" />
 	</body>
-</html>
+</html> 

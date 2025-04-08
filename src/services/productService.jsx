@@ -2,15 +2,15 @@ export const fetchProducts = async () => {
     try {
         const response = await fetch("http://localhost:5001/api/public/productos");
         const data = await response.json();
-        console.log("Fetched data structure:", data);
 
-        // Check if the fetched data is an array and handle the structure accordingly
         const productsArray = data.data;
 
         if (Array.isArray(productsArray)) {
-            // Format the products
             const formattedProducts = productsArray.map((product) => ({
-                ...product,
+                _id: product._id,
+                name: product.name,
+                presentations: product.presentations,
+                categories: product.categories,
                 image: product.images.site1,
                 description: product.descriptions.site1,
                 use: product.uses.site1,
@@ -21,8 +21,8 @@ export const fetchProducts = async () => {
             throw new Error("Fetched data is not an array");
         }
     } catch (error) {
-        console.error("Error fetching products:", error);
-        throw error;
+        throw new Error(`Error fetching products: ${error.message}`);
     }
 };
+
 

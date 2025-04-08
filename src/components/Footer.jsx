@@ -4,7 +4,8 @@ import "../styles/Footer.css";
 
 const Footer = () => {
     return (
-        <>
+        <div className="footer-container">
+            <hr className="footer-hr" />
             <footer>
                 <div>
                     <a href="/" target="_blank">
@@ -18,17 +19,12 @@ const Footer = () => {
                     <p>Jr. Dante 236, Lima 15047, Perú</p>
                 </div>
                 <div>
-                    <p>GGMJ - Lima, Perú</p>
-                    <p>
-                        Powered by{" "}
-                        <a href="https://www.https://firebase.google.com/" target="_blank">
-                            Google Firebase
-                        </a>
-                    </p>
+                    <p>ggmj</p>
+                    <p>Powered by <a href="https://firebase.google.com/" target="_blank">Google Firebase</a></p>
                     <p>© 2016 - 2025 Química Industrial by Oregon Chem Group</p>
                 </div>
             </footer>
-        </>
+        </div>
     );
 };
 

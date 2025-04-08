@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/CategoryCard.css";
 
 // Add a new function to fetch categories for the sidebar
 export const fetchCategories = async () => {
   try {
     const response = await fetch("http://localhost:5001/api/public/categorias");
-    const data = await response.json();
-    return data;
+    if (!response.ok) throw new Error("Error fetching categories");
+    const { data } = await response.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Error fetching categories:", error);
     throw error;

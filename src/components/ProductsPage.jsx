@@ -6,9 +6,10 @@ import { fetchPresentations } from "../services/presentationService";
 import SideBar from "./SideBar";
 import ProductPopup from "./ProductPopup";
 import { useWishlist } from "../contexts/WishlistContext";
-import "../styles/ProductCard.css";
-import "../styles/SideBar.css";
+import BannerCarousel from "./BannerCarousel";
+import "../styles/ProductsPage.css";
 import "../styles/SuccessMessage.css";
+import { FaHeart, FaEye } from "react-icons/fa";
 
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -27,8 +28,7 @@ const ProductsPage = () => {
     const [error, setError] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [successMessage, setSuccessMessage] = useState("");
-
-    const { addToWishlist } = useWishlist();
+    const { wishlist, addToWishlist } = useWishlist();
 
     const query = useQuery();
     const selectedCategory = query.get("category");
@@ -39,10 +39,10 @@ const ProductsPage = () => {
                 const productsData = await fetchProducts();
                 const categoriesData = await fetchCategories();
                 const presentationsData = await fetchPresentations();
-                setProducts(productsData);
-                setCategories(categoriesData);
-                setPresentations(presentationsData);
-                setFilteredProducts(productsData);
+                setProducts(Array.isArray(productsData) ? productsData : []);
+                setCategories(Array.isArray(categoriesData) ? categoriesData : []);
+                setPresentations(Array.isArray(presentationsData) ? presentationsData : []);
+                setFilteredProducts(Array.isArray(productsData) ? productsData : []);
 
                 if (selectedCategory) {
                     setSelectedCategories([selectedCategory]);
@@ -55,6 +55,16 @@ const ProductsPage = () => {
         };
         loadProductsAndData();
     }, [selectedCategory]);
+
+    useEffect(() => {
+        if (selectedCategory) {
+            const productSection = document.querySelector(".products-list");
+            if (productSection) {
+                productSection.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [selectedCategory]);
+
 
     useEffect(() => {
         filterProducts();
@@ -125,89 +135,105 @@ const ProductsPage = () => {
     };
 
     const handleAddToWishlist = (product) => {
-        addToWishlist(product);
-        setSuccessMessage(`${product.name} añadido a favoritos`);
-        setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds
+        const alreadyInWishlist = wishlist.some(item => item._id === product._id);
+
+        if (alreadyInWishlist) {
+            setSuccessMessage("Producto ya se encuentra en la lista de favoritos");
+        } else {
+            addToWishlist(product);
+            setSuccessMessage(`${product.name} añadido a favoritos`);
+        }
+
+        setTimeout(() => setSuccessMessage(""), 3000);
     };
+
 
     if (loading) return <p>Cargando productos...</p>;
     if (error) return <p>{error}</p>;
 
     return (
         <div className="products-page">
-            <aside className="sidebar">
-                <h2>Buscar Productos</h2>
-                <SideBar
-                    options={products}
-                    onSearch={handleSearch}
-                    onCategoryChange={handleCategoryChange}
-                    onPresentationChange={handlePresentationChange}
-                    placeholder="Buscar productos..."
-                    categories={categories}
-                    presentations={presentations}
-                    selectedCategories={selectedCategories}
-                />
-            </aside>
-            <main className="products-container">
-                <h1>Productos</h1>
-                <div className="filter-bar">
-                    <label htmlFor="sort">Ordenar por:</label>
-                    <select id="sort" value={sortOption} onChange={handleSortChange}>
-                        <option value="">Seleccione una opción</option>
-                        <option value="az">A-Z</option>
-                        <option value="za">Z-A</option>
-                        <option value="recent">Recientemente añadido</option>
-                    </select>
-                </div>
-                {filteredProducts.length > 0 ? (
-                    <div className="product-cards-container">
-                        {filteredProducts.map((product) => (
-                            <div className="product-card" key={product._id}>
-                                {product.image && (
-                                    <img
-                                        className="product-image"
-                                        src={product.image}
-                                        alt={`Product ${product.name}`}
-                                        onClick={() => handleProductClick(product)}
-                                    />
-                                )}
-                                <h2>{product.name}</h2>
-                                <p>
-                                    <strong>Presentaciones Disponibles:</strong>
-                                    {product.presentations
-                                        .map(
-                                            (presentation) =>
-                                                `${presentation.name}${presentation.measure}`
-                                        )
-                                        .join(", ")}
-                                </p>
-                                <button onClick={() => handleAddToWishlist(product)}>Añadir a Favoritos</button>
-                            </div>
-                        ))}
+            {/* <h1 className="page-title">Catálogo de Productos</h1> */}
+            <div className="content-layout">
+
+                {/* Sidebar */}
+                <aside className="sidebar">
+                    <SideBar
+                        options={products}
+                        onSearch={handleSearch}
+                        onCategoryChange={handleCategoryChange}
+                        onPresentationChange={handlePresentationChange}
+                        placeholder="Buscar productos..."
+                        categories={categories}
+                        presentations={presentations}
+                        selectedCategories={selectedCategories}
+                    />
+                </aside>
+
+                {/* Main Content */}
+                <main className="products-container">
+                    <div className="filter-section">
+                        <h3 className="filter-header">Guarda tus productos favoritos en el<br /> carrito {(<FaHeart className="heart-icon" />)}<strong>para armar tu cotización</strong></h3>
+                        <div className="filter-bar">
+                            <label htmlFor="sort">Ordenar por:</label> <br />
+                            <select id="sort" value={sortOption} onChange={handleSortChange}>
+                                <option value="">Seleccione una opción</option>
+                                <option value="az">A - Z</option>
+                                <option value="za">Z - A</option>
+                                <option value="recent">Recientemente añadidos</option>
+                            </select>
+                        </div>
                     </div>
-                ) : (
-                    <p>No se encontraron productos.</p>
+
+                    {filteredProducts.length > 0 ? (
+                        <div className="product-cards-container">
+                            {filteredProducts.map((product) => (
+                                <div className="product-card" key={product._id}>
+                                    {product.image && (
+                                        <div className="image-container">
+                                            <img
+                                                className="product-image"
+                                                src={product.image}
+                                                alt={`Product ${product.name}`}
+                                                onClick={() => handleProductClick(product)}
+                                            />
+                                            <FaEye className="eye-icon" onClick={() => handleProductClick(product)} />
+                                        </div>
+                                    )}
+                                    <h2>{product.name}</h2>
+                                    <p>
+                                        <strong>Presentaciones Disponibles:</strong>
+                                        {product.presentations
+                                            .map(
+                                                (presentation) =>
+                                                    `${presentation.name}${presentation.measure}`
+                                            )
+                                            .join(", ")}
+                                    </p>
+                                    <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">Añadir a Favoritos</button>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No se encontraron productos.</p>
+                    )}
+                </main>
+                {selectedProduct && (
+                    <ProductPopup
+                        product={selectedProduct}
+                        onClose={closePopup}
+                        onAddToWishlist={handleAddToWishlist}
+                    />
                 )}
-            </main>
-            {selectedProduct && (
-                <ProductPopup
-                    product={selectedProduct}
-                    onClose={closePopup}
-                    onAddToWishlist={handleAddToWishlist}
-                />
-            )}
-            {successMessage && <div className="success-message">{successMessage}</div>}
+                {successMessage && <div className="success-message">{successMessage}</div>}
+
+            </div>
+            {/* Carousel */}
+            <div className="carousel-container">
+                <BannerCarousel />
+            </div>
         </div>
     );
 };
 
 export default ProductsPage;
-
-
-
-
-
-
-
-
-

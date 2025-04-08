@@ -1,86 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import BannerData from '../services/bannerService.jsx';
+import React, { useEffect, useState, useCallback } from 'react';
+import useBannerData from '../services/bannerService';
 import "../styles/BannerCarousel.css";
 
 const BannerCarousel = () => {
-    const { banners, loading, error } = BannerData();
+    const { banners, loading, error } = useBannerData();
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    const nextSlide = useCallback(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    }, [banners.length]);
+
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-        }, 3000);
+        if (!Array.isArray(banners) || banners.length === 0) return;
 
+        const interval = setInterval(nextSlide, 4000);
         return () => clearInterval(interval);
-    }, [banners]);
+    }, [banners, nextSlide]);
 
-    if (loading) return <div>Cargando banners...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-    if (banners.length === 0) return <div>Banners no disponibles...</div>;
+    const renderBannerSlide = (banner, index) => (
+        <div
+            key={banner._id || index}
+            className={`banner-slide ${index === currentIndex ? 'active' : ''}`}
+            style={{ backgroundImage: `url(${banner.imageUrl || ''})` }}
+            role="img"
+            aria-label={`Banner ${index + 1}`}
+        />
+    );
+
+    if (loading) {
+        return (
+            <div className="loading-banner" role="status">
+                Cargando banners...
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="error-banner" role="alert">
+                Error al cargar los banners: {error.message}
+            </div>
+        );
+    }
+
+    if (!Array.isArray(banners) || banners.length === 0) {
+        return (
+            <div className="no-banners" role="status">
+                Banners no disponibles...
+            </div>
+        );
+    }
 
     return (
-        <div className='container'>
-            <div className="banner-carousel">
-                {banners.map((banner, index) => (
-                    <div
-                        key={banner._id}
-                        className={`banner-slide ${index === currentIndex ? 'active' : ''}`}
-                    >
-                        {/* Add banner content here */}
-                    </div>
-                ))}
-            </div>
+        <div className="banner-carousel" role="region" aria-label="Carrusel de banners">
+            {banners.map(renderBannerSlide)}
         </div>
     );
 };
 
 export default BannerCarousel;
-
-
-
-// import React, { useEffect, useState } from 'react';
-// import BannerData from '../services/bannerService.jsx';
-// import "../styles/BannerCarousel.css";
-
-
-// const BannerCarousel = () => {
-//     const { banners, loading, error } = BannerData();
-//     const [currentIndex, setCurrentIndex] = useState(0);
-
-//     useEffect(() => {
-//         const interval = setInterval(() => {
-//             setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-//         }, 3000);
-
-//         return () => clearInterval(interval);
-//     }, [banners]);
-
-//     if (loading) {
-//         return <div>Cargando banners...</div>;
-//     }
-
-//     if (error) {
-//         return <div>Error: {error.message}</div>;
-//     }
-
-//     if (banners.length === 0) {
-//         return <div>Banners no disponibles...</div>;
-//     }
-
-//     return (
-//         <div className='container'>
-//             <div className="banner-carousel">
-//                 {banners.map((banner, index) => (
-//                     <div
-//                         key={banner._id}
-//                         className={`banner-slide ${index === currentIndex ? 'active' : ''}`}
-//                         style={{ backgroundImage: `url(${banner.imageUrl})` }}
-//                     >
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default BannerCarousel;

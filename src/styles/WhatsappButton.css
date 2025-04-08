@@ -24,22 +24,10 @@
 /* RESPONSIVENESS */
 @media (max-width: 768px) {
   .whatsapp-button {
-    width: 60px;
-    height: 60px;
-    font-size: 2.5rem;
-    bottom: 15px;
-    /* Adjusted spacing */
-    right: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .whatsapp-button {
-    width: 50px;
-    height: 50px;
-    font-size: 2rem;
-    bottom: 10px;
-    /* Further adjustments */
-    right: 10px;
+    width: 70px;
+    height: 70px;
+    font-size: 3.0rem;
+    bottom: 90px;
+    right: 35px;
   }
 }

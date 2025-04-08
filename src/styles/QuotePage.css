@@ -1,75 +1,71 @@
+@import url('./variables.css');
+
+.quote-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-title {
+  text-align: left;
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+
 .quote-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 100%; /* Set width to 100% */
-  max-width: 850px; /* Optional: limit max width */
-  margin: auto; /* Center the form horizontally */
-  padding: 50px;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 60px;
+  padding: 40px;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .product-section {
   display: flex;
-  flex-direction: column; /* Or row if you want inline */
-  gap: 15px;
+  flex-direction: column;
+  gap: 20px;
+  
 }
 
 .product-inputs {
-  flex: 1; /* Allow inputs to take up all available space */
-  display: flex; /* Keep inputs aligned in a row */
-  gap: 10px; /* Space between inputs */
+  flex: 1;
+  display: flex;
+  gap: 20px;  
 }
 
 .product-row {
   display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: space-between; /* Space between inputs and button */
-  margin-bottom: 10px; /* Adjust spacing between product rows */
-}
-
-.remove-button {
-  background-color: #e74c3c; /* Red color for the button */
-  color: white;
-  border: 2px solid #5500FF;
-  font-size: 12px;
-  /* border: none; */
-  border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-  min-width: 35px; /* Set a min-width for consistent button size */
-  margin-left: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
 }
 
 .product-inputs {
   display: flex;
-  flex: 1; /* Take up the remaining space */
-  gap: 10px; /* Space between the inputs/selects */
+  flex: 1;
+  gap: 20px;
 }
 
 .product-inputs input,
 .product-inputs select {
-  flex: 1; /* Allow input/select to grow equally */
+  flex: 1;
   padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #5500FF;
+  border: 2px solid black;
   background-color: #fff;
 }
 
 .product-inputs input,
 .product-inputs select {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #5500FF;
-    background-color: #fff;
-}
-
-.product-row input,
-.product-row select {
-  flex: 1; /* Allow input/select to grow equally */
-  min-width: 120px; /* Optional: set a min width */
+  flex: 1;
+  padding: 10px;
+  border: 2px solid black;
+  background-color: #fff;
 }
 
 .product-section input,
@@ -79,26 +75,61 @@
   flex: 1;
   min-width: 120px;
   padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #5500FF;
+  border-radius: 20px;
+  border: 2px solid black;
   background-color: #fff;
-  color: #5500FF;
-}
-
-.remove-product {
-  background-color: transparent;
-  border: none;
-  color: #e74c3c; /* Red color for the delete button */
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 10px; /* Space between button and input */
+  color: black;
 }
 
 .add-product {
-  background-color: #5500FF;
+  background-color: black;
   color: white;
   cursor: pointer;
+}
+
+.add-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f02424;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: -20px;
+}
+
+.add-btn:hover {
+  background-color: #d02020;
+  transform: scale(1.02);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.remove-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  padding: 0;
+  margin-left: 20px;
+  min-height: 40px;
+  min-width: 40px;
+  border: 1px solid black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f02424;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: #d02020;
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .client-section {
@@ -112,6 +143,7 @@
 .client-type label {
   margin-right: 10px;
   font-weight: bold;
+  color: black;
 }
 
 .client-info {
@@ -123,8 +155,8 @@
 .client-info input {
   width: 100%;
   padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #5500FF;
+  border-radius: 20px;
+  border: 2px solid black;
   background-color: #fff;
 }
 
@@ -138,47 +170,71 @@
 .contact-method button {
   flex: 1;
   padding: 10px 20px;
-  border-radius: 5px;
-  border: 2px solid #5500FF;
-  background: none;
-  color: #5500FF;
+  border-radius: 20px;
+  color: #f02424;
   cursor: pointer;
 }
 
 .contact-method button.active {
-  background-color: #5500FF;
+  background-color: #f02424;
   color: white;
 }
 
 .observations textarea {
   width: 100%;
   padding: 15px;
-  border-radius: 5px;
-  border: 2px solid #5500FF;
+  border-radius: 20px;
+  border: 2px solid black;
   background-color: #fff;
 }
 
-.terms {
+.terms-privacy {
   display: flex;
+  justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
-.terms input[type="checkbox"] {
-  margin-right: 10px;
+.terms-privacy label {
+  font-size: 14px;
+  color: blue;
 }
 
-.submit-button {
-  display: block;
+.submit-btn {
   width: 100%;
-  padding: 15px;
-  border-radius: 5px;
-  border: none;
-  background-color: #5500FF;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f02424;
   color: white;
-  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-.submit-button:hover {
-  background-color: #357abd;
+.submit-btn:hover {
+  background-color: #d02020;
+  transform: scale(1.02);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+@media (max-width: 768px) {
+  .quote-page {
+    margin-top: 60px
+  }
+
+  .product-inputs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .contact-method {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
 }

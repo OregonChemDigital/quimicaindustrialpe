@@ -4,5 +4,9 @@ import "./src/styles/index.css"
 
 export default defineConfig({
     integrations: [react()],
+    output: 'static',
+    redirects: {
+        '/': '/inicio'
+    }
 });
 

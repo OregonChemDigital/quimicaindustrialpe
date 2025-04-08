@@ -1,154 +1,278 @@
-.hero {
+@import url('./variables.css');
+
+/* Common Left Margin */
+.hero-title,
+.hero-description,
+.hero-btn,
+.about-label,
+.about-title,
+.featured-label,
+.featured-title,
+.featured-description,
+.featured-btn,
+.category-label,
+.category-title,
+.category-description,
+.contact-label,
+.contact-title,
+.contact-description,
+.contact-btn {
+  margin-left: 20px;
+  /* Adjust this value as per design */
+}
+
+.homepage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: -20px;
+}
+
+/* Hero Section*/
+.homepage-hero {
   background: url('../assets/homePageImage1.png') no-repeat center center/cover;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* Align content to the left */
-  text-align: left;
-  /* Align text to the left */
-  min-height: 50vh;
-  color: white;
-  padding: 100px 50px;
   text-shadow: 1px 1px 2px #3C3A3E;
-  border-radius: 20px;
-  margin: 65px auto;
-  margin-top: 80px;
+  text-align: left;
+  min-height: 400px;
+  padding: 1px 50px;
+  margin: 20px auto;
   max-width: 1200px;
   position: relative;
+  border-radius: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.hero-content {
-  text-align: left;
-  max-width: 600px;
-  margin: 0;
-  padding: 20px;
+.hero-title {
+  font-size: 2.7rem;
 }
 
-.hero .cta-button {
-  display: inline-block;
-  /* Ensures button follows text alignment */
+.hero-description,
+.about-label,
+.featured-label,
+.featured-description,
+.category-label,
+.category-description,
+.contact-label,
+.contact-description {
+  font-size: 1rem;
   margin-top: 20px;
-  /* Adds spacing between text and button */
-  background-color: #f02424;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  border-radius: 20px;
-  cursor: pointer;
 }
 
-.hero .cta-button:hover {
-  background-color: #d02020;
+.about-description,
+.featured-title,
+.category-title,
+.contact-title {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+/* Banner Section */
+.homepage-banner {
+  max-width: 1200px;
+  margin: 10px auto;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 /* About Section */
-.about {
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-  justify-content: space-around;
-  align-items: center;
+.homepage-about {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  justify-items: start;
+  gap: 20px;
+  padding: 10px 60px;
+  border-radius: 20px;
   max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
-  border-radius: 20px;
-  color: black;
-}
-
-.about .text {
-  flex: 1;
-  padding: 20px;
-  font-size: 1.2rem;
-}
-
-.about .button {
-  background-color: #f02424;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 20px;
-}
-
-.about .button:hover {
-  background-color: #d02020;
+  margin: 20px auto;
 }
 
 /* Featured Section */
-.featured {
+.homepage-featured {
   display: flex;
   background: #333;
   color: white;
   padding: 40px;
   border-radius: 20px;
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 60px auto;
+  height: 400px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  align-items: center;
 }
 
-.featured .text {
+.homepage-featured .featured-text {
   flex: 1;
   padding: 20px;
 }
 
-.featured .image {
+.homepage-featured .featured-image {
   flex: 1;
   background: url('../assets/homePageAboutUsImage.png') no-repeat center center/cover;
   border-radius: 20px;
   height: 300px;
 }
 
-/* Categories Grid */
-.categories {
+/* Categories Section */
+.homepage-categories {
   max-width: 1200px;
-  margin: 40px auto;
-  color: black;
+  margin: 60px auto;
 }
 
-.categories .grid {
+/* Categories-Grid Layout */
+.category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
-.category {
-  background: #ddd;
-  height: 300px;
+.category-card,
+.first-category {
+  width: 100%;
+  height: 350px;
   border-radius: 20px;
+  position: relative;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.categories .btn {
+.homepage-categories .btn {
   display: block;
+  margin: 40px auto;
+}
+
+/* Flip Effect */
+.flip-card {
+  perspective: 1000px;
+  background: none;
+  border: none;
+}
+
+.category-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 20px;
+  background: none; /* Ensure no background */
+  border: none; /* Ensure no border */
+}
+
+/* Flip Animation */
+.flip-card:hover .category-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front Side - Ensure it fully covers the card */
+.category-card-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  backface-visibility: hidden; /* Prevent flicker */
+  transition: filter 0.3s ease-in-out;
+}
+
+/* Apply Blur to the Front Side ONLY on Hover */
+.flip-card:hover .category-card-front {
+  filter: blur(5px);
+}
+
+.category-name {
+  font-size: 1.8rem;
+  color: white;
+  text-shadow: 1px 1px 2px #000;
   text-align: center;
-  width: fit-content;
+  font-weight: bold;
+  position: absolute;
   margin: 20px auto;
+  padding: 10px;
+}
+
+/* Back Side */
+.category-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  background: rgba(0, 0, 0, 0.7); 
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  backface-visibility: hidden; /* Ensure it's hidden during flip */
+}
+
+/* Ensure the text only appears once the flip is done */
+.flip-card:hover .category-card-back {
+  opacity: 1;
+}
+
+/* Dark Overlay on the Back Side */
+.category-card-back::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: -1;
 }
 
 /* Contact Section */
-.contact {
+.homepage-contact {
   background: url('../assets/homePageContactUsImage.png') no-repeat center center/cover;
   color: white;
   padding: 100px 50px;
   border-radius: 20px;
   max-width: 1200px;
+  height: 400px;
   margin: 40px auto;
   text-align: left;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.hero-content,
-.featured .text,
-.contact .text {
-  max-width: 600px; 
-  margin-left: 50px; 
-}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
 
-.background-effect {
-  position: absolute;
-  left: 0;
-  top: -200px;
-  width: auto;
-  height: 1200px;
+  .homepage {
+    margin-top: 30px;
+  }
+
+  .homepage-featured {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .homepage-featured .featured-image {
+    height: 200px;
+  }
+
+  .homepage-categories .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .homepage-contact {
+    text-align: center;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
