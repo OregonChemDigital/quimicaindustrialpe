@@ -138,7 +138,7 @@ const ProductsPage = () => {
         const alreadyInWishlist = wishlist.some(item => item._id === product._id);
 
         if (alreadyInWishlist) {
-            setSuccessMessage("Producto ya se encuentra en la lista de favoritos");
+            setSuccessMessage(`${product.name} ya se encuentra en tu lista de favoritos`);
         } else {
             addToWishlist(product);
             setSuccessMessage(`${product.name} añadido a favoritos`);

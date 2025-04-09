@@ -11,7 +11,7 @@ const Navbar = () => {
     const [showWishlist, setShowWishlist] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [currentPath, setCurrentPath] = useState('/');
-    const { wishlist } = useWishlist();
+    const { wishlist, removeFromWishlist } = useWishlist();
 
     const handleWishlistClick = () => setShowWishlist(!showWishlist);
 
@@ -47,7 +47,8 @@ const Navbar = () => {
                     <WishlistPopup 
                         isOpen={showWishlist} 
                         onClose={() => setShowWishlist(false)} 
-                        items={wishlist} 
+                        items={wishlist}
+                        onRemoveItem={removeFromWishlist}
                     />
                 </div>
             </nav>
@@ -73,7 +74,8 @@ const Navbar = () => {
                 <WishlistPopup 
                     isOpen={showWishlist} 
                     onClose={() => setShowWishlist(false)} 
-                    items={wishlist} 
+                    items={wishlist}
+                    onRemoveItem={removeFromWishlist}
                 />
             </div>
         </div>

@@ -1,0 +1,21 @@
+{
+  "name": "quotes-server",
+  "version": "1.0.0",
+  "description": "Quote management system for multiple sites",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3",
+    "nodemailer": "^6.9.1",
+    "pdfkit": "^0.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+} 

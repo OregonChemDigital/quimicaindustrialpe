@@ -4,6 +4,8 @@ import { fetchProducts } from "../services/productService";
 import { useWishlist } from "../contexts/WishlistContext"; // Import the Wishlist context
 import { logEvent } from "firebase/analytics";
 import { analytics } from "../firebase";
+import LoadingSpinner from './LoadingSpinner';
+import SuccessMessage from './SuccessMessage';
 
 const initialClientInfo = {
     name: '',
@@ -21,7 +23,7 @@ const QuotePage = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [presentations, setPresentations] = useState([]);
-    const [clientType, setClientType] = useState('');
+    const [clientType, setClientType] = useState('Persona Natural');
     const [clientInfo, setClientInfo] = useState(initialClientInfo);
     const [contactMethod, setContactMethod] = useState('');
     const [observations, setObservations] = useState('');
@@ -29,6 +31,7 @@ const QuotePage = () => {
     const [privacyAccepted, setPrivacyAccepted] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { wishlist } = useWishlist(); // Use the Wishlist context
 
@@ -137,26 +140,74 @@ const QuotePage = () => {
         });
     };
 
+    const handleFrequencyChange = (index, frequency) => {
+        const newProducts = [...selectedProducts];
+        newProducts[index].frequency = frequency;
+        setSelectedProducts(newProducts);
+        
+        // Track frequency change
+        logEvent(analytics, 'quote_update_frequency', {
+            product_name: newProducts[index].name,
+            frequency: frequency
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         setSuccess(false);
-
-        logEvent(analytics, 'quote_form_submission', {
-            total_products: selectedProducts.length,
-            client_type: clientType
-        });
-
-        const formData = {
-            selectedProducts,
-            clientType,
-            clientInfo,
-            contactMethod,
-            observations,
-            termsAccepted,
-        };
+        setIsSubmitting(true);
 
         try {
+            // Validate required fields
+            if (!clientInfo.name?.trim()) {
+                throw new Error('El nombre es requerido');
+            }
+            if (!clientInfo.phone?.trim()) {
+                throw new Error('El teléfono es requerido');
+            }
+            if (!clientInfo.email?.trim()) {
+                throw new Error('El email es requerido');
+            }
+            if (selectedProducts.length === 0) {
+                throw new Error('Debe seleccionar al menos un producto');
+            }
+
+            const formData = {
+                products: selectedProducts.map(product => {
+                    const presentation = product.presentations.find(p => p._id === product.presentation);
+                    return {
+                        id: presentation ? presentation.name : '-',
+                        name: product.name,
+                        quantity: parseFloat(product.volume) || 1,
+                        unit: (parseFloat(product.volume) || 1) > 1 ? 'unidades' : 'unidad',
+                        presentation: presentation ? presentation.name : '-',
+                        frequency: product.frequency || 'única'
+                    };
+                }),
+                client: {
+                    name: clientInfo.name.trim(),
+                    email: clientInfo.email.trim(),
+                    phone: clientInfo.phone.trim().replace(/\D/g, ''),
+                    company: clientInfo.socialReason?.trim() || '',
+                    ruc: clientInfo.ruc?.trim() || ''
+                },
+                observations: observations.trim(),
+                contactMethod: contactMethod,
+                status: 'pending',
+                site: {
+                    name: 'Química Industrial Perú',
+                    address: 'Av. Industrial 123, Lima, Perú',
+                    district: 'Lima',
+                    city: 'Lima',
+                    department: 'Lima'
+                }
+            };
+
+            // Log the formatted data being sent to the server
+            console.log('Formatted data being sent:', formData);
+            console.log('Client info being sent:', formData.client);
+
             const response = await fetch('http://localhost:5001/api/public/quotes', {
                 method: 'POST',
                 headers: {
@@ -165,26 +216,41 @@ const QuotePage = () => {
                 body: JSON.stringify(formData),
             });
 
+            console.log('Response status:', response.status);
+
             if (!response.ok) {
-                throw new Error('Error al enviar la cotización');
+                const errorData = await response.json();
+                console.error('Error response:', errorData);
+                throw new Error(errorData.message || 'Error al procesar la cotización');
             }
 
             setSuccess(true);
             setSelectedProducts([]);
             setClientInfo(initialClientInfo);
-            setClientType('');
+            setClientType('Persona Natural');
             setContactMethod('');
             setObservations('');
             setTermsAccepted(false);
             setPrivacyAccepted(false);
         } catch (error) {
-            setError('Error al enviar la cotización. Por favor, intente nuevamente.');
+            console.error('Error submitting quote:', error);
+            setError(error.message || 'Error al procesar la cotización. Por favor, intente nuevamente.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
         <div className="quote-page">
             <h1 className="page-title">Formulario de Cotización</h1>
+
+            {success && (
+                <SuccessMessage
+                    message="¡Gracias por tu interés! Hemos recibido tu solicitud de cotización y nos pondremos en contacto contigo pronto."
+                    onClose={() => setSuccess(false)}
+                    duration={5000}
+                />
+            )}
 
             <form className="quote-form" onSubmit={handleSubmit}>
                 <section className="product-section">
@@ -221,8 +287,11 @@ const QuotePage = () => {
                                     value={product.volume}
                                     onChange={(e) => handleVolumeChange(index, e.target.value)}
                                 />
-                                <select>
-                                    <option value="">Única Compra</option>
+                                <select
+                                    onChange={(e) => handleFrequencyChange(index, e.target.value)}
+                                    value={product.frequency || 'única compra'}
+                                >
+                                    <option value="única compra">Única Compra</option>
                                     <option value="quincenal">Quincenal</option>
                                     <option value="mensual">Mensual</option>
                                     <option value="bimestral">Bimestral</option>
@@ -247,7 +316,7 @@ const QuotePage = () => {
                     <div className="client-type">
                         <label>Tipo de cliente:</label>
                         <select value={clientType} onChange={(e) => setClientType(e.target.value)}>
-                            <option value="">Persona Natural</option>
+                            <option value="Persona Natural">Persona Natural</option>
                             <option value="empresa">Empresa</option>
                             <option value="personaEmpresa">Persona con Empresa</option>
                         </select>
@@ -281,8 +350,8 @@ const QuotePage = () => {
                     </button>
                     <button
                         type="button"
-                        className={contactMethod === "call" ? "active" : ""}
-                        onClick={() => handleContactMethodSelect("call")}
+                        className={contactMethod === "llamada" ? "active" : ""}
+                        onClick={() => handleContactMethodSelect("llamada")}
                     >
                         Llamada
                     </button>
@@ -314,9 +383,23 @@ const QuotePage = () => {
                 </section>
 
                 <section className="submit-quote">
-                    <button type="submit" className="submit-btn" disabled={!termsAccepted || !privacyAccepted}>
-                        Enviar cotización
+                    <button 
+                        type="submit" 
+                        className="submit-btn" 
+                        disabled={isSubmitting || !termsAccepted || !privacyAccepted}
+                    >
+                        {isSubmitting ? (
+                            <LoadingSpinner size="small" />
+                        ) : (
+                            'Enviar cotización'
+                        )}
                     </button>
+
+                    {error && (
+                        <div className="error-message">
+                            {error}
+                        </div>
+                    )}
                 </section>
             </form>
         </div>
