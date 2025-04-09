@@ -1,0 +1,15 @@
+@import url('./variables.css');
+
+/* Apply the font globally */
+body {
+  font-family: var(--body-font);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure all text elements inherit the font */
+h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select {
+  font-family: var(--body-font);
+} 

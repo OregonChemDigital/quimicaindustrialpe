@@ -24,6 +24,15 @@ body {
   flex-direction: column;
 }
 
+/* Typography */
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, a,
+button, input, textarea, select,
+li, label, div {
+  font-family: var(--body-font, sans-serif);
+}
+
 /* Global Link Styles */
 a {
   text-decoration: none;
@@ -88,21 +97,6 @@ a {
 .btn-primary:hover {
   background-color: var(--primary-hover);
   transform: scale(1.1);
-}
-
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-button,
-input,
-textarea {
-  font-family: var(--body-font, sans-serif) !important;
 }
 
 /* Override text color based on section */

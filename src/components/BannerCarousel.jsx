@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import useBannerData from '../services/bannerService';
+import LoadingSpinner from './LoadingSpinner';
 import "../styles/BannerCarousel.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
@@ -46,8 +47,9 @@ const BannerCarousel = () => {
 
     if (loading) {
         return (
-            <div className="loading-banner" role="status">
-                Cargando banners...
+            <div className="loading-overlay">
+                <LoadingSpinner size="medium" />
+                <p>Cargando banners...</p>
             </div>
         );
     }

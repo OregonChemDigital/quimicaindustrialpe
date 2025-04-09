@@ -7,6 +7,7 @@ import SideBar from "./SideBar";
 import ProductPopup from "./ProductPopup";
 import { useWishlist } from "../contexts/WishlistContext";
 import BannerCarousel from "./BannerCarousel";
+import LoadingSpinner from "./LoadingSpinner";
 import "../styles/ProductsPage.css";
 import "../styles/SuccessMessage.css";
 import { FaHeart, FaEye } from "react-icons/fa";
@@ -148,7 +149,14 @@ const ProductsPage = () => {
     };
 
 
-    if (loading) return <p>Cargando productos...</p>;
+    if (loading) {
+        return (
+            <div className="loading-overlay">
+                <LoadingSpinner size="medium" />
+                <p>Cargando productos...</p>
+            </div>
+        );
+    }
     if (error) return <p>{error}</p>;
 
     return (

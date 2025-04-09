@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SocialIcon } from "react-social-icons";
 import { trackPageView, safeLogEvent } from '../utils/analytics';
+import LoadingSpinner from './LoadingSpinner';
 import "../styles/ContactPage.css";
 
 const ContactPage = () => {
@@ -104,8 +105,9 @@ const ContactPage = () => {
 
     if (isLoading) {
         return (
-            <div className="loading-container" role="status">
-                <p>Loading contact information...</p>
+            <div className="loading-overlay">
+                <LoadingSpinner size="medium" />
+                <p>Cargando información de contacto...</p>
             </div>
         );
     }

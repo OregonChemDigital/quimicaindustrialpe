@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getProductBySlug } from '../../lib/products';
+
+export async function getStaticPaths() {
+    // This will be populated with actual product data
+    const products = [
+        // Example product - replace with your actual product data
+        {
+            slug: 'producto-ejemplo',
+            name: 'Producto Ejemplo',
+            description: 'Descripción detallada del producto',
+            image: '/images/products/example.jpg',
+            presentations: [
+                { name: 'Presentación 1', measure: '1L' },
+                { name: 'Presentación 2', measure: '5L' }
+            ],
+            categories: ['Categoría 1', 'Categoría 2'],
+            use: 'Usos específicos del producto'
+        }
+    ];
+
+    return products.map(product => ({
+        params: { slug: product.slug },
+        props: { product }
+    }));
+}
+
+const { product } = Astro.props;
+
+// SEO metadata
+const title = `${product.name} | Química Industrial`;
+const description = product.description;
+const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`;
+---
+
+<Layout title={title} description={description} canonicalUrl={canonicalUrl}>
+    <main class="product-page">
+        <div class="container">
+            <div class="product-grid">
+                <div class="product-image">
+                    <img 
+                        src={product.image} 
+                        alt={product.name}
+                        width="600"
+                        height="400"
+                    />
+                </div>
+                <div class="product-info">
+                    <h1>{product.name}</h1>
+                    
+                    <div class="product-details">
+                        <section>
+                            <h2>Presentaciones Disponibles</h2>
+                            <ul>
+                                {product.presentations.map(p => (
+                                    <li>{p.name}{p.measure}</li>
+                                ))}
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h2>Categorías</h2>
+                            <ul>
+                                {product.categories.map(category => (
+                                    <li>{category}</li>
+                                ))}
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h2>Descripción</h2>
+                            <p>{product.description}</p>
+                        </section>
+
+                        <section>
+                            <h2>Usos</h2>
+                            <p>{product.use}</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .product-page {
+        padding: 2rem 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .product-info h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-details section {
+        margin-bottom: 2rem;
+    }
+
+    .product-details h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .product-details ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .product-details li {
+        margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": {product.name},
+        "description": {product.description},
+        "image": {product.image},
+        "offers": {
+            "@type": "AggregateOffer",
+            "offerCount": {product.presentations.length},
+            "offers": {product.presentations.map(p => ({
+                "@type": "Offer",
+                "name": p.name + p.measure
+            }))}
+        }
+    }
+</script> 

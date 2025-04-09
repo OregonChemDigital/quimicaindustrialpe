@@ -81,6 +81,12 @@ const WishlistPopup = ({ isOpen, onClose, items, onRemoveItem }) => {
 
     return (
         <>
+            {isLoading && (
+                <div className="loading-overlay">
+                    <LoadingSpinner size="medium" />
+                    <p>Procesando...</p>
+                </div>
+            )}
             <div className="wishlist-popup" ref={popupRef}>
                 <div className="wishlist-popup-content">
                     <h2>Tus Favoritos</h2>
