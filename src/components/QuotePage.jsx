@@ -259,8 +259,15 @@ const QuotePage = () => {
     };
 
     return (
-        <div className="quote-page">
+        <div className={`quote-page ${isSubmitting ? 'dimmed' : ''}`}>
             <h1 className="page-title">Formulario de Cotización</h1>
+
+            {isSubmitting && (
+                <div className="loading-overlay">
+                    <LoadingSpinner size="medium" />
+                    <p>Enviando cotización...</p>
+                </div>
+            )}
 
             {success && (
                 <SuccessMessage
