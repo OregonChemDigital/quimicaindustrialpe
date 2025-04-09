@@ -33,7 +33,7 @@ const QuotePage = () => {
     const [success, setSuccess] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { wishlist } = useWishlist(); // Use the Wishlist context
+    const { wishlist, clearWishlist } = useWishlist(); // Use the Wishlist context
 
     useEffect(() => {
         const loadProducts = async () => {
@@ -63,10 +63,12 @@ const QuotePage = () => {
     }, [wishlist]);
 
     const handleProductSearch = (index, input) => {
+        console.log('handleProductSearch - input:', input);
         const newProducts = [...selectedProducts];
         newProducts[index].name = input;
 
         const product = products.find((p) => p.name === input);
+        console.log('handleProductSearch - found product:', product);
         newProducts[index].presentations = product?.presentations || [];
         newProducts[index].presentation = ''; // reset selected presentation
         setSelectedProducts(newProducts);
@@ -100,6 +102,7 @@ const QuotePage = () => {
     };
 
     const handleProductSelect = (index, presentationId) => {
+        console.log('handleProductSelect - presentationId:', presentationId);
         const newProducts = [...selectedProducts];
         newProducts[index].presentation = presentationId;
         setSelectedProducts(newProducts);
@@ -172,16 +175,24 @@ const QuotePage = () => {
             if (selectedProducts.length === 0) {
                 throw new Error('Debe seleccionar al menos un producto');
             }
+            if (!contactMethod) {
+                throw new Error('Debe seleccionar un método de contacto');
+            }
+
+            console.log('Selected Products before mapping:', selectedProducts);
 
             const formData = {
                 products: selectedProducts.map(product => {
-                    const presentation = product.presentations.find(p => p._id === product.presentation);
+                    console.log('Mapping product:', product);
+                    console.log('Product presentations:', product.presentations);
+                    const presentation = product.presentations?.find(p => p._id === product.presentation);
+                    console.log('Found presentation:', presentation);
                     return {
-                        id: presentation ? presentation.name : '-',
+                        id: product.name,
                         name: product.name,
                         quantity: parseFloat(product.volume) || 1,
                         unit: (parseFloat(product.volume) || 1) > 1 ? 'unidades' : 'unidad',
-                        presentation: presentation ? presentation.name : '-',
+                        presentation: presentation?.name || product.name,
                         frequency: product.frequency || 'única'
                     };
                 }),
@@ -196,17 +207,21 @@ const QuotePage = () => {
                 contactMethod: contactMethod,
                 status: 'pending',
                 site: {
+                    id: 'quimicaindustrialpe',
                     name: 'Química Industrial Perú',
                     address: 'Av. Industrial 123, Lima, Perú',
                     district: 'Lima',
                     city: 'Lima',
-                    department: 'Lima'
+                    department: 'Lima',
+                    phone: '+51 1 123 4567',
+                    email: 'contacto@quimicaindustrialpe.com'
                 }
             };
 
-            // Log the formatted data being sent to the server
-            console.log('Formatted data being sent:', formData);
-            console.log('Client info being sent:', formData.client);
+            console.log('Final formData being sent:', JSON.stringify(formData, null, 2));
+            console.log('Client info being sent:', JSON.stringify(formData.client, null, 2));
+            console.log('Products being sent:', JSON.stringify(formData.products, null, 2));
+            console.log('Site info being sent:', JSON.stringify(formData.site, null, 2));
 
             const response = await fetch('http://localhost:5001/api/public/quotes', {
                 method: 'POST',
@@ -224,6 +239,9 @@ const QuotePage = () => {
                 throw new Error(errorData.message || 'Error al procesar la cotización');
             }
 
+            // Clear the wishlist after successful submission
+            clearWishlist();
+            
             setSuccess(true);
             setSelectedProducts([]);
             setClientInfo(initialClientInfo);
@@ -289,9 +307,9 @@ const QuotePage = () => {
                                 />
                                 <select
                                     onChange={(e) => handleFrequencyChange(index, e.target.value)}
-                                    value={product.frequency || 'única compra'}
+                                    value={product.frequency || 'única'}
                                 >
-                                    <option value="única compra">Única Compra</option>
+                                    <option value="única">Única Compra</option>
                                     <option value="quincenal">Quincenal</option>
                                     <option value="mensual">Mensual</option>
                                     <option value="bimestral">Bimestral</option>
@@ -331,9 +349,9 @@ const QuotePage = () => {
                         <input type="text" name="ruc" placeholder="RUC" value={clientInfo.ruc} onChange={handleClientInfoChange} />
                     </div>
                 </section>
+
                 <section className="contact-method">
                     <h4>¿Cómo prefiero que me contacten?</h4>
-
                     <button
                         type="button"
                         className={contactMethod === "email" ? "active" : ""}
@@ -379,7 +397,7 @@ const QuotePage = () => {
                         checked={privacyAccepted}
                         onChange={() => setPrivacyAccepted(!privacyAccepted)}
                     />
-                    <label htmlFor="terms">Acepto la politica de privacidad</label>
+                    <label htmlFor="privacy">Acepto la politica de privacidad</label>
                 </section>
 
                 <section className="submit-quote">

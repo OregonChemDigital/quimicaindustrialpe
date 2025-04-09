@@ -18,7 +18,7 @@ const WishlistPopup = ({ isOpen, onClose, items, onRemoveItem }) => {
         if (isOpen) {
             trackWishlistPopupOpen();
             // Add click outside handler
-            const handleClickOutside = (event) => {
+            const handleClickOutside = (event) => {z
                 if (popupRef.current && !popupRef.current.contains(event.target)) {
                     onClose();
                 }
