@@ -63,12 +63,10 @@ const QuotePage = () => {
     }, [wishlist]);
 
     const handleProductSearch = (index, input) => {
-        console.log('handleProductSearch - input:', input);
         const newProducts = [...selectedProducts];
         newProducts[index].name = input;
 
         const product = products.find((p) => p.name === input);
-        console.log('handleProductSearch - found product:', product);
         newProducts[index].presentations = product?.presentations || [];
         newProducts[index].presentation = ''; // reset selected presentation
         setSelectedProducts(newProducts);
@@ -81,15 +79,29 @@ const QuotePage = () => {
     };
 
     const handleVolumeChange = (index, volume) => {
-        const newProducts = [...selectedProducts];
-        newProducts[index].volume = volume;
-        setSelectedProducts(newProducts);
+        // If the input is empty, allow it
+        if (volume === '') {
+            const newProducts = [...selectedProducts];
+            newProducts[index].volume = '';
+            setSelectedProducts(newProducts);
+            return;
+        }
+
+        // Convert to number and ensure it's positive
+        const numericValue = parseFloat(volume);
         
-        // Track volume change
-        logEvent(analytics, 'quote_volume_change', {
-            product_name: newProducts[index].name,
-            volume: volume
-        });
+        // If it's a valid number and not negative, update the state
+        if (!isNaN(numericValue) && numericValue >= 0) {
+            const newProducts = [...selectedProducts];
+            newProducts[index].volume = volume; // Keep the string input for display
+            setSelectedProducts(newProducts);
+            
+            // Track volume change with numeric value
+            logEvent(analytics, 'quote_volume_change', {
+                product_name: newProducts[index].name,
+                volume: numericValue
+            });
+        }
     };
 
     const handleAddProductRow = () => {
@@ -102,7 +114,6 @@ const QuotePage = () => {
     };
 
     const handleProductSelect = (index, presentationId) => {
-        console.log('handleProductSelect - presentationId:', presentationId);
         const newProducts = [...selectedProducts];
         newProducts[index].presentation = presentationId;
         setSelectedProducts(newProducts);
@@ -179,14 +190,9 @@ const QuotePage = () => {
                 throw new Error('Debe seleccionar un método de contacto');
             }
 
-            console.log('Selected Products before mapping:', selectedProducts);
-
             const formData = {
                 products: selectedProducts.map(product => {
-                    console.log('Mapping product:', product);
-                    console.log('Product presentations:', product.presentations);
                     const presentation = product.presentations?.find(p => p._id === product.presentation);
-                    console.log('Found presentation:', presentation);
                     return {
                         id: product.name,
                         name: product.name,
@@ -198,6 +204,7 @@ const QuotePage = () => {
                 }),
                 client: {
                     name: clientInfo.name.trim(),
+                    lastname: clientInfo.lastName.trim(),
                     email: clientInfo.email.trim(),
                     phone: clientInfo.phone.trim().replace(/\D/g, ''),
                     company: clientInfo.socialReason?.trim() || '',
@@ -218,11 +225,6 @@ const QuotePage = () => {
                 }
             };
 
-            console.log('Final formData being sent:', JSON.stringify(formData, null, 2));
-            console.log('Client info being sent:', JSON.stringify(formData.client, null, 2));
-            console.log('Products being sent:', JSON.stringify(formData.products, null, 2));
-            console.log('Site info being sent:', JSON.stringify(formData.site, null, 2));
-
             const response = await fetch('http://localhost:5001/api/public/quotes', {
                 method: 'POST',
                 headers: {
@@ -230,8 +232,6 @@ const QuotePage = () => {
                 },
                 body: JSON.stringify(formData),
             });
-
-            console.log('Response status:', response.status);
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -311,6 +311,14 @@ const QuotePage = () => {
                                     placeholder="Cantidad/Unidades"
                                     value={product.volume}
                                     onChange={(e) => handleVolumeChange(index, e.target.value)}
+                                    min="0"
+                                    step="1"
+                                    onKeyDown={(e) => {
+                                        // Prevent minus sign from being typed
+                                        if (e.key === '-' || e.key === 'e' || e.key === 'E') {
+                                            e.preventDefault();
+                                        }
+                                    }}
                                 />
                                 <select
                                     onChange={(e) => handleFrequencyChange(index, e.target.value)}

@@ -65,7 +65,7 @@ const ContactPage = () => {
     );
 
     const renderSocialIcons = () => (
-        <div className="social-icons" role="navigation" aria-label="Redes sociales">
+        <div className="contact-social-icons" role="navigation" aria-label="Redes sociales">
             {socialLinks.map(({ network, url }) => (
                 <button
                     key={network}

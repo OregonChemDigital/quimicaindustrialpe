@@ -193,6 +193,22 @@ const HomePage = () => {
         );
     };
 
+    const renderContactSection = () => (
+        <section className="homepage-contact section-spacing" role="complementary">
+            <div className="contact-text">
+                <p className="contact-label">QUÍMICA INDUSTRIAL PERÚ</p>
+                <h3 className="contact-title">Ponte en contacto <strong>con nosotros.</strong></h3>
+                <p className="contact-description">
+                    Cuéntanos qué necesitas y te ayudaremos a encontrar la<br />
+                    solución química ideal. Escríbenos y trabajemos juntos!
+                </p>
+                <Link to="/contacto" className="contact-btn btn btn-primary" aria-label="Contactar a Química Industrial Perú">
+                    Contáctanos
+                </Link>
+            </div>
+        </section>
+    );
+
     return (
         <main role="main">
             <BannerCarousel />
@@ -200,6 +216,7 @@ const HomePage = () => {
             {renderAboutSection()}
             {renderFeaturedSection()}
             {renderCategoriesSection()}
+            {renderContactSection()}
         </main>
     );
 };

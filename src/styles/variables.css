@@ -12,5 +12,19 @@
   
     --z-tooltip: 10;
     --z-fixed: 100;
+
+    /* Layout Variables */
+    --max-width: 1400px;
+    --content-padding: 20px;
+    --section-margin: 40px;
+    --text-margin-left: 20px;
+    --border-radius: 20px;
+    --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    /* Responsive Breakpoints */
+    --mobile: 480px;
+    --tablet: 768px;
+    --laptop: 1024px;
+    --desktop: 1400px;
   }
   

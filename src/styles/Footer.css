@@ -4,8 +4,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    width: 95%;
+    max-width: 1400px;
     margin: auto;
     padding: 20px 0;
   }

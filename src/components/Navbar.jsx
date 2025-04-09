@@ -37,10 +37,10 @@ const Navbar = () => {
                     </a>
                 </div>
                 <ul className="nav-list">
-                    <a href="/inicio">Inicio</a>
-                    <a href="/productos" onClick={trackNavbarProductosClick}>Productos</a>
-                    <a href="/contacto">Contacto</a>
-                    <a href="/cotizar" onClick={trackNavbarCotizarClick}>Cotizar</a>
+                    <li><a href="/inicio">Inicio</a></li>
+                    <li><a href="/productos" onClick={trackNavbarProductosClick}>Productos</a></li>
+                    <li><a href="/contacto">Contacto</a></li>
+                    <li><a href="/cotizar" onClick={trackNavbarCotizarClick}>Cotizar</a></li>
                 </ul>
                 <div className="social-icons">
                     <FaHeart className="heart-icon" onClick={handleWishlistClick} />
@@ -52,6 +52,7 @@ const Navbar = () => {
                     />
                 </div>
             </nav>
+            <hr className="navbar-hr" />
         </div>
     );
 
