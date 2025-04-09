@@ -31,7 +31,8 @@ export const fetchProducts = async () => {
                     image: product.images?.site1 || '',
                     description: product.descriptions?.site1 || '',
                     use: product.uses?.site1 || '',
-                    slug: product.name.toLowerCase().replace(/\s+/g, '-')
+                    slug: product.name.toLowerCase().replace(/\s+/g, '-'),
+                    createdAt: product.createdAt
                 };
             });
             return formattedProducts;
@@ -39,8 +40,8 @@ export const fetchProducts = async () => {
             throw new Error("Fetched data is not an array");
         }
     } catch (error) {
-        console.error('Error in fetchProducts:', error);
-        throw new Error(`Error fetching products: ${error.message}`);
+        console.error("Error fetching products:", error);
+        throw error;
     }
 };
 

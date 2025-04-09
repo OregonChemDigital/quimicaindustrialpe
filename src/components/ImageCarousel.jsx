@@ -5,18 +5,14 @@ const ImageCarousel = ({ images }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-    console.log('ImageCarousel received images:', images);
-
     useEffect(() => {
         let interval;
         if (isAutoPlaying && images && images.length > 1) {
-            console.log('Starting auto-play');
             interval = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
             }, 3000);
         }
         return () => {
-            console.log('Clearing interval');
             clearInterval(interval);
         };
     }, [isAutoPlaying, images]);
@@ -36,11 +32,8 @@ const ImageCarousel = ({ images }) => {
     };
 
     if (!images || images.length === 0) {
-        console.log('No images to display');
         return null;
     }
-
-    console.log('Current index:', currentIndex);
 
     return (
         <div className="carousel-container">

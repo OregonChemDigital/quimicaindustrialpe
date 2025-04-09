@@ -8,9 +8,10 @@ import ProductPopup from "./ProductPopup";
 import { useWishlist } from "../contexts/WishlistContext";
 import BannerCarousel from "./BannerCarousel";
 import LoadingSpinner from "./LoadingSpinner";
+import SuccessMessage from "./SuccessMessage";
 import "../styles/ProductsPage.css";
 import "../styles/SuccessMessage.css";
-import { FaHeart, FaEye } from "react-icons/fa";
+import { FaHeart, FaEye, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -28,7 +29,10 @@ const ProductsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [showSuccess, setShowSuccess] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 15;
     const { wishlist, addToWishlist } = useWishlist();
 
     const query = useQuery();
@@ -93,6 +97,7 @@ const ProductsPage = () => {
 
     const handleSortChange = (e) => {
         setSortOption(e.target.value);
+        setCurrentPage(1); // Reset to first page when sorting changes
     };
 
     const filterProducts = () => {
@@ -121,10 +126,16 @@ const ProductsPage = () => {
         } else if (sortOption === "za") {
             filtered.sort((a, b) => b.name.localeCompare(a.name));
         } else if (sortOption === "recent") {
-            filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            filtered.sort((a, b) => {
+                // Extract timestamp from MongoDB ObjectId
+                const timestampA = parseInt(a._id.substring(0, 8), 16) * 1000;
+                const timestampB = parseInt(b._id.substring(0, 8), 16) * 1000;
+                return timestampB - timestampA; // Sort in descending order (newest first)
+            });
         }
 
         setFilteredProducts(filtered);
+        setCurrentPage(1);
     };
 
     const handleProductClick = (product) => {
@@ -144,10 +155,23 @@ const ProductsPage = () => {
             addToWishlist(product);
             setSuccessMessage(`${product.name} añadido a favoritos`);
         }
-
-        setTimeout(() => setSuccessMessage(""), 3000);
+        setShowSuccess(true);
+        setTimeout(() => {
+            setShowSuccess(false);
+            setSuccessMessage("");
+        }, 3000);
     };
 
+    // Calculate pagination
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     if (loading) {
         return (
@@ -194,34 +218,65 @@ const ProductsPage = () => {
                     </div>
 
                     {filteredProducts.length > 0 ? (
-                        <div className="product-cards-container">
-                            {filteredProducts.map((product) => (
-                                <div className="product-card" key={product._id}>
-                                    {product.image && (
-                                        <div className="image-container">
-                                            <img
-                                                className="product-image"
-                                                src={product.image}
-                                                alt={`Product ${product.name}`}
-                                                onClick={() => handleProductClick(product)}
-                                            />
-                                            <FaEye className="eye-icon" onClick={() => handleProductClick(product)} />
-                                        </div>
-                                    )}
-                                    <h2>{product.name}</h2>
-                                    <p>
-                                        <strong>Presentaciones Disponibles:</strong>
-                                        {product.presentations
-                                            .map(
-                                                (presentation) =>
-                                                    `${presentation.name}${presentation.measure}`
-                                            )
-                                            .join(", ")}
-                                    </p>
-                                    <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">Añadir a Favoritos</button>
-                                </div>
-                            ))}
-                        </div>
+                        <>
+                            <div className="product-cards-container">
+                                {currentProducts.map((product) => (
+                                    <div className="product-card" key={product._id}>
+                                        {product.image && (
+                                            <div className="image-container">
+                                                <img
+                                                    className="product-image"
+                                                    src={product.image}
+                                                    alt={`Product ${product.name}`}
+                                                    onClick={() => handleProductClick(product)}
+                                                />
+                                                <FaEye className="eye-icon" onClick={() => handleProductClick(product)} />
+                                            </div>
+                                        )}
+                                        <h2>{product.name}</h2>
+                                        <p>
+                                            <strong>Presentaciones Disponibles:</strong>
+                                            {product.presentations
+                                                .map(
+                                                    (presentation) =>
+                                                        `${presentation.name}${presentation.measure}`
+                                                )
+                                                .join(", ")}
+                                        </p>
+                                        <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">Añadir a Favoritos</button>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            {/* Pagination Controls */}
+                            <div className="pagination-controls">
+                                <button 
+                                    onClick={() => handlePageChange(currentPage - 1)} 
+                                    disabled={currentPage === 1}
+                                    className="pagination-button"
+                                >
+                                    <FaChevronLeft />
+                                </button>
+                                
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                    <button
+                                        key={page}
+                                        onClick={() => handlePageChange(page)}
+                                        className={`pagination-button ${currentPage === page ? 'active' : ''}`}
+                                    >
+                                        {page}
+                                    </button>
+                                ))}
+                                
+                                <button 
+                                    onClick={() => handlePageChange(currentPage + 1)} 
+                                    disabled={currentPage === totalPages}
+                                    className="pagination-button"
+                                >
+                                    <FaChevronRight />
+                                </button>
+                            </div>
+                        </>
                     ) : (
                         <p>No se encontraron productos.</p>
                     )}
@@ -233,13 +288,17 @@ const ProductsPage = () => {
                         onAddToWishlist={handleAddToWishlist}
                     />
                 )}
-                {successMessage && <div className="success-message">{successMessage}</div>}
+                {showSuccess && (
+                    <SuccessMessage
+                        message={successMessage}
+                        onClose={() => setShowSuccess(false)}
+                        duration={3000}
+                    />
+                )}
 
             </div>
             {/* Carousel */}
-            <div className="carousel-container">
                 <BannerCarousel />
-            </div>
         </div>
     );
 };

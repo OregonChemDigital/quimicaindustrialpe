@@ -23,9 +23,6 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
             .filter(Boolean) // Remove any null/undefined values
     ];
 
-    console.log('Product:', product);
-    console.log('Carousel Images:', carouselImages);
-
     return (
         <div className="popup-overlay" onClick={onClose}>
             <div className="popup-card" onClick={(e) => e.stopPropagation()}>

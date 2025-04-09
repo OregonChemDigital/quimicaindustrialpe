@@ -155,8 +155,6 @@
   transform-style: preserve-3d;
   transition: transform 0.6s ease-in-out;
   border-radius: 20px;
-  background: none; /* Ensure no background */
-  border: none; /* Ensure no border */
 }
 
 /* Flip Animation */
@@ -176,6 +174,7 @@
   background-position: center;
   backface-visibility: hidden; /* Prevent flicker */
   transition: filter 0.3s ease-in-out;
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
 /* Apply Blur to the Front Side ONLY on Hover */
@@ -204,7 +203,7 @@
   border-radius: 20px;
   background-size: cover;
   background-position: center;
-  background: rgba(0, 0, 0, 0.7); 
+  background-repeat: no-repeat;
   transform: rotateY(180deg);
   display: flex;
   align-items: center;
@@ -212,11 +211,6 @@
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   backface-visibility: hidden; /* Ensure it's hidden during flip */
-}
-
-/* Ensure the text only appears once the flip is done */
-.flip-card:hover .category-card-back {
-  opacity: 1;
 }
 
 /* Dark Overlay on the Back Side */
@@ -228,9 +222,19 @@
   width: 100%;
   height: 100%;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
-  z-index: -1;
+  z-index: 1;
+}
+
+.category-card-back .category-name {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure the text only appears once the flip is done */
+.flip-card:hover .category-card-back {
+  opacity: 1;
 }
 
 /* Contact Section */

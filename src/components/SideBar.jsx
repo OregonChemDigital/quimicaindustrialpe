@@ -68,60 +68,64 @@ const SideBar = ({
 
     return (
         <div className="sidebar-container">
-            <div className="search-bar">
-                <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={handleInputChange}
-                    className="dropdown-input"
-                    placeholder={placeholder}
-                />
+            <div className="search-bar-container">
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                        className="dropdown-input"
+                        placeholder={placeholder}
+                    />
+                </div>
             </div>
 
-            <div className="category-filters">
-                <h3>Filtrar por Categoría</h3>
-                <hr />
-                {sortedCategories.map((category) => (
-                    <div key={category._id} className="category-filter">
-                        <input
-                            type="checkbox"
-                            id={category._id}
-                            onChange={() => handleCategoryCheckboxChange(category.name)}
-                            checked={checkedCategories.has(category.name)}
-                        />
-                        <label htmlFor={category._id}>{category.name}</label>
-                    </div>
-                ))}
-            </div>
-
-            <div className="presentation-filters">
-                <h3>Filtrar por Presentación</h3>
-                <hr />
-                <div className="presentation-section">
-                    <h4>Solidos</h4>
-                    {solidos.map((presentation) => (
-                        <div key={presentation._id} className="presentation-filter">
+            <div className="sidebar-content">
+                <div className="category-filters">
+                    <h3>Filtrar por Categoría</h3>
+                    <hr />
+                    {sortedCategories.map((category) => (
+                        <div key={category._id} className="category-filter">
                             <input
                                 type="checkbox"
-                                id={presentation._id}
-                                onChange={() => handlePresentationCheckboxChange(presentation.name)}
+                                id={category._id}
+                                onChange={() => handleCategoryCheckboxChange(category.name)}
+                                checked={checkedCategories.has(category.name)}
                             />
-                            <label htmlFor={presentation._id}>{presentation.name}</label>
+                            <label htmlFor={category._id}>{category.name}</label>
                         </div>
                     ))}
                 </div>
-                <div className="presentation-section">
-                    <h4>Liquidos</h4>
-                    {liquidos.map((presentation) => (
-                        <div key={presentation._id} className="presentation-filter">
-                            <input
-                                type="checkbox"
-                                id={presentation._id}
-                                onChange={() => handlePresentationCheckboxChange(presentation.name)}
-                            />
-                            <label htmlFor={presentation._id}>{presentation.name}</label>
-                        </div>
-                    ))}
+
+                <div className="presentation-filters">
+                    <h3>Filtrar por Presentación</h3>
+                    <hr />
+                    <div className="presentation-section">
+                        <h4>Solidos</h4>
+                        {solidos.map((presentation) => (
+                            <div key={presentation._id} className="presentation-filter">
+                                <input
+                                    type="checkbox"
+                                    id={presentation._id}
+                                    onChange={() => handlePresentationCheckboxChange(presentation.name)}
+                                />
+                                <label htmlFor={presentation._id}>{presentation.name}</label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="presentation-section">
+                        <h4>Liquidos</h4>
+                        {liquidos.map((presentation) => (
+                            <div key={presentation._id} className="presentation-filter">
+                                <input
+                                    type="checkbox"
+                                    id={presentation._id}
+                                    onChange={() => handlePresentationCheckboxChange(presentation.name)}
+                                />
+                                <label htmlFor={presentation._id}>{presentation.name}</label>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

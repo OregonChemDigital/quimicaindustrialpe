@@ -106,9 +106,9 @@ const HomePage = () => {
                     Reguladores de Acidez, Detergentes, Aceites Lubricantes,<br />
                     ácidos, Industria Textil, Industria Pesquera, entre otros.
                 </p>
-                <Link 
-                    to="/cotizar" 
-                    className="featured-btn btn btn-primary" 
+                <Link
+                    to="/cotizar"
+                    className="featured-btn btn btn-primary"
                     onClick={() => handleCotizarClick('featured')}
                     aria-label="Cotizar productos químicos desde la sección destacada"
                 >
@@ -211,8 +211,8 @@ const HomePage = () => {
 
     return (
         <main role="main">
-            <BannerCarousel />
             {renderHeroSection()}
+            <BannerCarousel />
             {renderAboutSection()}
             {renderFeaturedSection()}
             {renderCategoriesSection()}
