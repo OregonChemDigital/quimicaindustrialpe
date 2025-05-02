@@ -1,12 +1,14 @@
+import { API_ENDPOINTS } from '../config/api';
+
 export const fetchProducts = async () => {
     try {
         // Fetch products
-        const productsResponse = await fetch("http://localhost:5001/api/public/productos");
+        const productsResponse = await fetch(API_ENDPOINTS.PRODUCTS);
         const productsData = await productsResponse.json();
         const productsArray = productsData.data;
 
         // Fetch presentations
-        const presentationsResponse = await fetch("http://localhost:5001/api/public/presentaciones");
+        const presentationsResponse = await fetch(API_ENDPOINTS.PRESENTATIONS);
         const presentationsData = await presentationsResponse.json();
         const presentationsArray = presentationsData.data;
 

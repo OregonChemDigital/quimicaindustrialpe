@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_ENDPOINTS } from '../config/api';
 
 const useBannerData = () => {
     const [banners, setBanners] = useState([]);
@@ -8,8 +9,10 @@ const useBannerData = () => {
     useEffect(() => {
         const fetchBanners = async () => {
             try {
-                const response = await fetch("http://localhost:5001/api/public/banners?site=site1");
-                if (!response.ok) throw new Error("Error fetching banners");
+                const response = await fetch(`${API_ENDPOINTS.BANNERS}?site=site1`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch banners');
+                }
                 const { data } = await response.json();
                 setBanners(Array.isArray(data) ? data : []);
             } catch (error) {
@@ -22,6 +25,19 @@ const useBannerData = () => {
     }, []);
 
     return { banners, loading, error };
+};
+
+export const fetchBanners = async () => {
+    try {
+        const response = await fetch(`${API_ENDPOINTS.BANNERS}?site=site1`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch banners');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching banners:', error);
+        throw error;
+    }
 };
 
 export default useBannerData;

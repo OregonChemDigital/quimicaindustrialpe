@@ -6,6 +6,7 @@ import { logEvent } from "firebase/analytics";
 import { analytics } from "../firebase";
 import LoadingSpinner from './LoadingSpinner';
 import SuccessMessage from './SuccessMessage';
+import { API_ENDPOINTS } from '../config/api';
 
 const initialClientInfo = {
     name: '',
@@ -225,7 +226,7 @@ const QuotePage = () => {
                 }
             };
 
-            const response = await fetch('http://localhost:5001/api/public/quotes', {
+            const response = await fetch(API_ENDPOINTS.QUOTES, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
