@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/ImageCarousel.css';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ImageCarousel = ({ images }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,14 +59,14 @@ const ImageCarousel = ({ images }) => {
                         onClick={goToPrevious}
                         aria-label="Previous image"
                     >
-                        &lt;
+                        <FaChevronLeft />
                     </button>
                     <button 
                         className="carousel-button next" 
                         onClick={goToNext}
                         aria-label="Next image"
                     >
-                        &gt;
+                        <FaChevronRight />
                     </button>
                     <div className="carousel-dots">
                         {images.map((_, index) => (

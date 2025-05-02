@@ -1,10 +1,16 @@
 import React from 'react';
 import '../styles/ProductPopup.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ImageCarousel from './ImageCarousel';
 
 const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
+    const navigate = useNavigate();
     const handleAddToWishlist = () => onAddToWishlist(product);
+
+    const handleViewDetails = () => {
+        onClose();
+        navigate(`/productos/${product.slug}`);
+    };
 
     const renderProductInfo = (label, content) => {
         if (!content) return null;
@@ -52,13 +58,12 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
                         >
                             Añadir a Favoritos
                         </button>
-                        <Link 
-                            to={`/productos/${product.slug}`}
+                        <button 
                             className="btn-secondary btn"
-                            onClick={onClose}
+                            onClick={handleViewDetails}
                         >
                             Ver más detalles
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <button 

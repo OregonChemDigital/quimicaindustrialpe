@@ -4,6 +4,7 @@ import HomePage from "../components/HomePage.jsx";
 import ContactPage from "../components/ContactPage.jsx";
 import QuotePage from "../components/QuotePage.jsx";
 import ProductsPage from "../components/ProductsPage.jsx";
+import SingleProductPage from "../components/SingleProductPage.jsx";
 
 const AppRoutes = () => {
     return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
             <Route path="/inicio" element={<HomePage />} />
             <Route path="/contacto" element={<ContactPage />} />
             <Route path="/productos" element={<ProductsPage />} />
+            <Route path="/productos/:slug" element={<SingleProductPage />} />
             <Route path="/cotizar" element={<QuotePage />} />
         </Routes>
     );

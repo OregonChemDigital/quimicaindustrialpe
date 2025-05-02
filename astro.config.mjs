@@ -5,6 +5,10 @@ import "./src/styles/index.css"
 export default defineConfig({
     integrations: [react()],
     output: 'static',
+    base: '/quimicaindustrialpe/',
+    build: {
+        format: 'directory'
+    },
     redirects: {
         '/': '/inicio'
     }
