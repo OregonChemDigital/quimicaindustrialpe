@@ -41,19 +41,30 @@ const ProductsPage = () => {
     useEffect(() => {
         const loadProductsAndData = async () => {
             try {
-                const productsData = await fetchProducts();
-                const categoriesData = await fetchCategories();
-                const presentationsData = await fetchPresentations();
-                setProducts(Array.isArray(productsData) ? productsData : []);
-                setCategories(Array.isArray(categoriesData) ? categoriesData : []);
-                setPresentations(Array.isArray(presentationsData) ? presentationsData : []);
-                setFilteredProducts(Array.isArray(productsData) ? productsData : []);
+                setLoading(true);
+                setError(null);
+                
+                const [productsData, categoriesData, presentationsData] = await Promise.all([
+                    fetchProducts(),
+                    fetchCategories(),
+                    fetchPresentations()
+                ]);
+
+                if (!Array.isArray(productsData) || !Array.isArray(categoriesData) || !Array.isArray(presentationsData)) {
+                    throw new Error('Invalid data format received from API');
+                }
+
+                setProducts(productsData);
+                setCategories(categoriesData);
+                setPresentations(presentationsData);
+                setFilteredProducts(productsData);
 
                 if (selectedCategory) {
                     setSelectedCategories([selectedCategory]);
                 }
             } catch (err) {
-                setError("Error loading data: " + err.message);
+                console.error('Error loading data:', err);
+                setError(err.message || 'Error al cargar los datos. Por favor, intente nuevamente.');
             } finally {
                 setLoading(false);
             }
@@ -176,12 +187,26 @@ const ProductsPage = () => {
     if (loading) {
         return (
             <div className="loading-overlay">
-                <LoadingSpinner size="medium" />
+                <LoadingSpinner size="large" />
                 <p>Cargando productos...</p>
             </div>
         );
     }
-    if (error) return <p>{error}</p>;
+
+    if (error) {
+        return (
+            <div className="error-container">
+                <h2>Error</h2>
+                <p>{error}</p>
+                <button 
+                    className="btn-primary"
+                    onClick={() => window.location.reload()}
+                >
+                    Reintentar
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="products-page">

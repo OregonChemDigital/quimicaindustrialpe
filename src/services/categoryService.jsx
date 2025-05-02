@@ -7,11 +7,12 @@ export const fetchCategories = async () => {
   try {
     const response = await fetch(API_ENDPOINTS.CATEGORIES);
     if (!response.ok) {
-      throw new Error('Failed to fetch categories');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return await response.json();
+    const { data } = await response.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error("Error fetching categories:", error);
     throw error;
   }
 };
@@ -29,6 +30,7 @@ const CategoryData = () => {
         setCategories(data);
       } catch (error) {
         setError(error);
+        console.error("Error in CategoryData:", error);
       } finally {
         setLoading(false);
       }

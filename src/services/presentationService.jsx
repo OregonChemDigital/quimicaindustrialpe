@@ -4,11 +4,12 @@ export const fetchPresentations = async () => {
     try {
         const response = await fetch(API_ENDPOINTS.PRESENTATIONS);
         if (!response.ok) {
-            throw new Error('Failed to fetch presentations');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return await response.json();
+        const { data } = await response.json();
+        return Array.isArray(data) ? data : [];
     } catch (error) {
-        console.error('Error fetching presentations:', error);
+        console.error("Error fetching presentations:", error);
         throw error;
     }
 };

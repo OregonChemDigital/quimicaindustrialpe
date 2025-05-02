@@ -11,12 +11,13 @@ const useBannerData = () => {
             try {
                 const response = await fetch(`${API_ENDPOINTS.BANNERS}?site=site1`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch banners');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const { data } = await response.json();
                 setBanners(Array.isArray(data) ? data : []);
             } catch (error) {
                 setError(error);
+                console.error("Error in useBannerData:", error);
             } finally {
                 setLoading(false);
             }
@@ -31,11 +32,12 @@ export const fetchBanners = async () => {
     try {
         const response = await fetch(`${API_ENDPOINTS.BANNERS}?site=site1`);
         if (!response.ok) {
-            throw new Error('Failed to fetch banners');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return await response.json();
+        const { data } = await response.json();
+        return Array.isArray(data) ? data : [];
     } catch (error) {
-        console.error('Error fetching banners:', error);
+        console.error("Error fetching banners:", error);
         throw error;
     }
 };

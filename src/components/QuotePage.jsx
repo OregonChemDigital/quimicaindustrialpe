@@ -251,9 +251,21 @@ const QuotePage = () => {
             setObservations('');
             setTermsAccepted(false);
             setPrivacyAccepted(false);
+
+            // Track successful submission
+            logEvent(analytics, 'quote_submitted', {
+                success: true,
+                products_count: formData.products.length
+            });
         } catch (error) {
             console.error('Error submitting quote:', error);
-            setError(error.message || 'Error al procesar la cotización. Por favor, intente nuevamente.');
+            setError(error.message);
+            
+            // Track failed submission
+            logEvent(analytics, 'quote_submitted', {
+                success: false,
+                error: error.message
+            });
         } finally {
             setIsSubmitting(false);
         }
