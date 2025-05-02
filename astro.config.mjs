@@ -8,9 +8,6 @@ export default defineConfig({
     base: '/quimicaindustrialpe/',
     build: {
         format: 'directory'
-    },
-    redirects: {
-        '/': '/inicio'
     }
 });
 

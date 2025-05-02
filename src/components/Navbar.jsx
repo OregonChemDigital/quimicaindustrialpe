@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { FaHeart, FaBox, FaPhone, FaClipboardList } from "react-icons/fa";
 import LogoShort from "../assets/qiLogoShort.png";
 import Logo from "../assets/qiLogo.png";
@@ -32,15 +33,15 @@ const Navbar = () => {
         <div className="navbar-container">
             <nav className={currentPath === "/" ? "navbar-home" : "navbar-default"}>
                 <div>
-                    <a href="/">
+                    <Link to="/">
                         <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
-                    </a>
+                    </Link>
                 </div>
                 <ul className="nav-list">
-                    <li><a href="/inicio">Inicio</a></li>
-                    <li><a href="/productos" onClick={trackNavbarProductosClick}>Productos</a></li>
-                    <li><a href="/contacto">Contacto</a></li>
-                    <li><a href="/cotizar" onClick={trackNavbarCotizarClick}>Cotizar</a></li>
+                    <li><Link to="/inicio">Inicio</Link></li>
+                    <li><Link to="/productos" onClick={trackNavbarProductosClick}>Productos</Link></li>
+                    <li><Link to="/contacto">Contacto</Link></li>
+                    <li><Link to="/cotizar" onClick={trackNavbarCotizarClick}>Cotizar</Link></li>
                 </ul>
                 <div className="social-icons">
                     <FaHeart className="heart-icon" onClick={handleWishlistClick} />
@@ -58,19 +59,19 @@ const Navbar = () => {
 
     const renderMobileNavbar = () => (
         <div className="mobile-navbar">
-            <a href="/">
+            <Link to="/">
                 <img className="mobile-logo" src={LogoShort.src} alt="Logo Química Industrial 2025" />
-            </a>
+            </Link>
             <div className="mobile-icons">
-                <a href="/productos" onClick={trackNavbarProductosClick}>
+                <Link to="/productos" onClick={trackNavbarProductosClick}>
                     <FaBox />
-                </a>
-                <a href="/contacto">
+                </Link>
+                <Link to="/contacto">
                     <FaPhone />
-                </a>
-                <a href="/cotizar" onClick={trackNavbarCotizarClick}>
+                </Link>
+                <Link to="/cotizar" onClick={trackNavbarCotizarClick}>
                     <FaClipboardList />
-                </a>
+                </Link>
                 <FaHeart className="heart-icon" onClick={handleWishlistClick} />
                 <WishlistPopup 
                     isOpen={showWishlist} 
