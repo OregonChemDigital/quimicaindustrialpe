@@ -26,3 +26,4 @@ const ClientApp = () => (
 );
 
 export { AppWrapper, ClientApp };
+export default ClientApp;
