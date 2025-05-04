@@ -17,6 +17,7 @@ let app;
 let analytics = null;
 let db;
 
+// Initialize Firebase synchronously
 try {
     // First check if Firebase is already initialized
     const existingApps = getApps();
@@ -31,17 +32,14 @@ try {
 
     // Initialize analytics if supported and in browser environment
     if (typeof window !== 'undefined') {
-        isSupported().then(supported => {
-            if (supported) {
-                try {
-                    analytics = getAnalytics(app);
-                } catch (analyticsError) {
-                    if (process.env.NODE_ENV === 'development') {
-                        console.error('Analytics initialization error:', analyticsError);
-                    }
-                }
+        // Initialize analytics synchronously
+        try {
+            analytics = getAnalytics(app);
+        } catch (analyticsError) {
+            if (process.env.NODE_ENV === 'development') {
+                console.error('Analytics initialization error:', analyticsError);
             }
-        });
+        }
     }
 } catch (error) {
     if (process.env.NODE_ENV === 'development') {
@@ -53,4 +51,18 @@ try {
     }
 }
 
-export { app, analytics, db }; 
+// Create a wrapper for analytics logging
+const logAnalyticsEvent = (eventName, eventParams = {}) => {
+    if (analytics) {
+        try {
+            const { logEvent } = require('firebase/analytics');
+            logEvent(analytics, eventName, eventParams);
+        } catch (error) {
+            if (process.env.NODE_ENV === 'development') {
+                console.error('Analytics logging error:', error);
+            }
+        }
+    }
+};
+
+export { app, analytics, db, logAnalyticsEvent }; 
