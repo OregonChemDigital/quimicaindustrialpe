@@ -151,6 +151,7 @@
     padding: 15px;
     text-align: center;
     position: relative;
+    min-height: 500px; /* Ensure minimum height for consistent layout */
 }
 
 .product-card img {
@@ -195,6 +196,7 @@
     font-size: 1rem;
     color: var(--text-dark);
     margin: 5px 0;
+    min-height: 60px;
 }
 
 /* Improve readability of presentations */
@@ -230,6 +232,20 @@
     margin-top: auto;
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-card .btn-primary {
+    width: 200px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    margin-top: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    line-height: 40px !important;
+    box-sizing: border-box !important;
 }
 
 .carousel-container {
