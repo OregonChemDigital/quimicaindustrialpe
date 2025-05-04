@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/QuotePage.css";
 import { fetchProducts } from "../services/productService";
 import { useWishlist } from "../contexts/WishlistContext"; // Import the Wishlist context
-import { logEvent } from "firebase/analytics";
-import { analytics } from "../firebase";
+import { safeLogEvent } from "../utils/analytics";
 import LoadingSpinner from './LoadingSpinner';
 import SuccessMessage from './SuccessMessage';
 import { API_ENDPOINTS } from '../config/api';
@@ -73,7 +72,7 @@ const QuotePage = () => {
         setSelectedProducts(newProducts);
         
         // Track product search
-        logEvent(analytics, 'product_search', {
+        safeLogEvent('product_search', {
             search_term: input,
             product_found: !!product
         });
@@ -98,7 +97,7 @@ const QuotePage = () => {
             setSelectedProducts(newProducts);
             
             // Track volume change with numeric value
-            logEvent(analytics, 'quote_volume_change', {
+            safeLogEvent('quote_volume_change', {
                 product_name: newProducts[index].name,
                 volume: numericValue
             });
@@ -109,7 +108,7 @@ const QuotePage = () => {
         setSelectedProducts([...selectedProducts, { name: '', volume: '', presentation: '', presentations: [] }]);
         
         // Track adding product row
-        logEvent(analytics, 'quote_add_product', {
+        safeLogEvent('quote_add_product', {
             total_products: selectedProducts.length + 1
         });
     };
@@ -120,7 +119,7 @@ const QuotePage = () => {
         setSelectedProducts(newProducts);
         
         // Track presentation selection
-        logEvent(analytics, 'quote_select_presentation', {
+        safeLogEvent('quote_select_presentation', {
             product_name: newProducts[index].name,
             presentation_id: presentationId
         });
@@ -131,7 +130,7 @@ const QuotePage = () => {
         setSelectedProducts(newProducts);
         
         // Track product removal
-        logEvent(analytics, 'quote_remove_product', {
+        safeLogEvent('quote_remove_product', {
             product_name: selectedProducts[index].name
         });
     };
@@ -141,7 +140,7 @@ const QuotePage = () => {
         setClientInfo((prev) => ({ ...prev, [name]: value }));
         
         // Track client info changes
-        logEvent(analytics, 'quote_update_client', {
+        safeLogEvent('quote_update_client', {
             field_name: name
         });
     };
@@ -150,7 +149,7 @@ const QuotePage = () => {
         setContactMethod(method);
         
         // Track contact method selection
-        logEvent(analytics, 'quote_select_contact', {
+        safeLogEvent('quote_select_contact', {
             method: method
         });
     };
@@ -161,7 +160,7 @@ const QuotePage = () => {
         setSelectedProducts(newProducts);
         
         // Track frequency change
-        logEvent(analytics, 'quote_update_frequency', {
+        safeLogEvent('quote_update_frequency', {
             product_name: newProducts[index].name,
             frequency: frequency
         });
@@ -253,7 +252,7 @@ const QuotePage = () => {
             setPrivacyAccepted(false);
 
             // Track successful submission
-            logEvent(analytics, 'quote_submitted', {
+            safeLogEvent('quote_submitted', {
                 success: true,
                 products_count: formData.products.length
             });
@@ -262,7 +261,7 @@ const QuotePage = () => {
             setError(error.message);
             
             // Track failed submission
-            logEvent(analytics, 'quote_submitted', {
+            safeLogEvent('quote_submitted', {
                 success: false,
                 error: error.message
             });

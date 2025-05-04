@@ -12,9 +12,9 @@ const firebaseConfig = {
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Get existing app or initialize new one
+// Initialize Firebase
 let app;
-let analytics;
+let analytics = null;
 let db;
 
 try {
