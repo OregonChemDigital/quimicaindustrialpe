@@ -264,7 +264,7 @@ const ProductsPage = () => {
                                             {product.presentations
                                                 .map(
                                                     (presentation) =>
-                                                        `${presentation.name}${presentation.measure}`
+                                                        `${presentation.name}`
                                                 )
                                                 .join(", ")}
                                         </p>

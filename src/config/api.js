@@ -4,6 +4,7 @@ const API_URL = process.env.NODE_ENV === 'production'
 
 export const API_ENDPOINTS = {
     BANNERS: `${API_URL}/api/public/banners`,
+    BANNER_UPLOAD: `${API_URL}/api/banners/nuevo`,
     CATEGORIES: `${API_URL}/api/public/categorias`,
     PRODUCTS: `${API_URL}/api/public/productos`,
     PRESENTATIONS: `${API_URL}/api/public/presentaciones`,

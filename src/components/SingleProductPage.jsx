@@ -135,7 +135,7 @@ const SingleProductPage = () => {
                     {product.presentations && product.presentations.length > 0 && (
                         <div className="presentations">
                             <h3>Presentaciones Disponibles</h3>
-                            <p>{product.presentations.map(p => `${p.name}${p.measure || ''}`).join(", ")}</p>
+                            <p>{product.presentations.map(p => `${p.name}`).join(", ")}</p>
                         </div>
                     )}
                     <div className="product-actions">

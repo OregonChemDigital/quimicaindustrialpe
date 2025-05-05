@@ -35,7 +35,12 @@ const BannerCarousel = () => {
         <div
             key={banner._id || index}
             className={`banner-slide ${index === currentIndex ? 'active' : ''}`}
-            style={{ backgroundImage: `url(${banner.imageUrl || ''})` }}
+            style={{
+                backgroundImage: `url(${banner.imageUrl || ''})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
             role="img"
             aria-label={`Banner ${index + 1}`}
             // onClick={() => {

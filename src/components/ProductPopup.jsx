@@ -40,7 +40,7 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
                     {product.presentations && product.presentations.length > 0 && (
                         renderProductInfo(
                             "Presentaciones Disponibles", 
-                            product.presentations.map(p => `${p.name}${p.measure || ''}`).join(", ")
+                            product.presentations.map(p =>`${p.name}`).join(", ")
                         )
                     )}
                     {product.categories && product.categories.length > 0 && (
