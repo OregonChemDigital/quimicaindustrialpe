@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchProducts } from "../services/productService";
 import { fetchCategories } from "../services/categoryService";
 import { fetchPresentations } from "../services/presentationService";
@@ -11,7 +11,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import SuccessMessage from "./SuccessMessage";
 import "../styles/ProductsPage.css";
 import "../styles/SuccessMessage.css";
-import { FaHeart, FaEye, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaHeart, FaEye, FaChevronLeft, FaChevronRight, FaShoppingBasket, FaCheck } from "react-icons/fa";
 
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -34,16 +34,18 @@ const ProductsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 15;
     const { wishlist, addToWishlist } = useWishlist();
+    const navigate = useNavigate();
 
     const query = useQuery();
     const selectedCategory = query.get("category");
+    const searchParam = query.get("search");
 
     useEffect(() => {
         const loadProductsAndData = async () => {
             try {
                 setLoading(true);
                 setError(null);
-                
+
                 const [productsData, categoriesData, presentationsData] = await Promise.all([
                     fetchProducts(),
                     fetchCategories(),
@@ -57,7 +59,16 @@ const ProductsPage = () => {
                 setProducts(productsData);
                 setCategories(categoriesData);
                 setPresentations(presentationsData);
-                setFilteredProducts(productsData);
+
+                // If there's a search parameter, filter products immediately
+                if (searchParam) {
+                    const filtered = productsData.filter(product =>
+                        product.name.toLowerCase().includes(searchParam.toLowerCase())
+                    );
+                    setFilteredProducts(filtered);
+                } else {
+                    setFilteredProducts(productsData);
+                }
 
                 if (selectedCategory) {
                     setSelectedCategories([selectedCategory]);
@@ -70,7 +81,14 @@ const ProductsPage = () => {
             }
         };
         loadProductsAndData();
-    }, [selectedCategory]);
+    }, [selectedCategory, searchParam]);
+
+    // Handle search parameter from URL
+    useEffect(() => {
+        if (searchParam) {
+            setSearchTerm(searchParam);
+        }
+    }, [searchParam]);
 
     useEffect(() => {
         if (selectedCategory) {
@@ -80,7 +98,6 @@ const ProductsPage = () => {
             }
         }
     }, [selectedCategory]);
-
 
     useEffect(() => {
         filterProducts();
@@ -198,7 +215,7 @@ const ProductsPage = () => {
             <div className="error-container">
                 <h2>Error</h2>
                 <p>{error}</p>
-                <button 
+                <button
                     className="btn-primary"
                     onClick={() => window.location.reload()}
                 >
@@ -230,7 +247,9 @@ const ProductsPage = () => {
                 {/* Main Content */}
                 <main className="products-container">
                     <div className="filter-section">
-                        <h3 className="filter-header">Guarda tus productos favoritos en el<br /> carrito {(<FaHeart className="heart-icon" />)}<strong>para armar tu cotización</strong></h3>
+                        <FaShoppingBasket className="heart-icon" />
+                        <h3 className="filter-header">Agrega productos a la canasta de favoritos&nbsp;&nbsp;&nbsp;&nbsp;<br /> <strong>para solicitar una cotización</strong></h3>
+                        
                         <div className="filter-bar">
                             <label htmlFor="sort">Ordenar por:</label> <br />
                             <select id="sort" value={sortOption} onChange={handleSortChange}>
@@ -245,17 +264,40 @@ const ProductsPage = () => {
                     {filteredProducts.length > 0 ? (
                         <>
                             <div className="product-cards-container">
+                                {searchTerm && (
+                                    <div className="product-card view-all-card" onClick={() => {
+                                        setSearchTerm("");
+                                        setSelectedCategories([]);
+                                        setSelectedPresentations([]);
+                                        setSortOption("");
+                                        navigate("/productos");
+                                    }}>
+                                        <div className="view-all-content">
+                                            <h2>Ver todos los productos</h2>
+                                            <p>Hacer clic para ver el catálogo completo</p>
+                                        </div>
+                                    </div>
+                                )}
                                 {currentProducts.map((product) => (
                                     <div className="product-card" key={product._id}>
                                         {product.image && (
                                             <div className="image-container">
                                                 <img
-                                                    className="product-image"
                                                     src={product.image}
-                                                    alt={`Product ${product.name}`}
+                                                    alt={product.name}
+                                                    className="product-image"
                                                     onClick={() => handleProductClick(product)}
                                                 />
-                                                <FaEye className="eye-icon" onClick={() => handleProductClick(product)} />
+                                                <FaEye 
+                                                    className="eye-icon" 
+                                                    onClick={() => handleProductClick(product)}
+                                                />
+                                                <span 
+                                                    className="view-product-text"
+                                                    onClick={() => handleProductClick(product)}
+                                                >
+                                                    Ver producto
+                                                </span>
                                             </div>
                                         )}
                                         <h2>{product.name}</h2>
@@ -268,21 +310,24 @@ const ProductsPage = () => {
                                                 )
                                                 .join(", ")}
                                         </p>
-                                        <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">Añadir a Favoritos</button>
+                                        <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">
+                                            {wishlist.some(item => item._id === product._id) ? "Ya en tu canasta" : "Añadir a Favoritos"}&nbsp;&nbsp;
+                                            {wishlist.some(item => item._id === product._id) ? <FaCheck /> : <FaShoppingBasket />}
+                                        </button>
                                     </div>
                                 ))}
                             </div>
-                            
+
                             {/* Pagination Controls */}
                             <div className="pagination-controls">
-                                <button 
-                                    onClick={() => handlePageChange(currentPage - 1)} 
+                                <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
                                     disabled={currentPage === 1}
                                     className="pagination-button"
                                 >
                                     <FaChevronLeft />
                                 </button>
-                                
+
                                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                     <button
                                         key={page}
@@ -292,9 +337,9 @@ const ProductsPage = () => {
                                         {page}
                                     </button>
                                 ))}
-                                
-                                <button 
-                                    onClick={() => handlePageChange(currentPage + 1)} 
+
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
                                     disabled={currentPage === totalPages}
                                     className="pagination-button"
                                 >
@@ -323,7 +368,7 @@ const ProductsPage = () => {
 
             </div>
             {/* Carousel */}
-                <BannerCarousel />
+            <BannerCarousel />
         </div>
     );
 };

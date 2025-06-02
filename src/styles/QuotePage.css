@@ -131,7 +131,7 @@
   border-radius: 20px;
   border: 1px solid black;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f02424;
+  background-color: #16792f;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -158,7 +158,7 @@
   min-width: 40px;
   border: 1px solid black;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f02424;
+  background-color: #16792f;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -209,12 +209,12 @@
   flex: 1;
   padding: 10px 20px;
   border-radius: 20px;
-  color: #f02424;
+  color: #16792f;
   cursor: pointer;
 }
 
 .contact-method button.active {
-  background-color: #f02424;
+  background-color: #16792f;
   color: white;
 }
 
@@ -244,7 +244,7 @@
   border-radius: 20px;
   border: 1px solid black;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f02424;
+  background-color: #16792f;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;

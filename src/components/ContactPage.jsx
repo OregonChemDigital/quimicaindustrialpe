@@ -28,9 +28,9 @@ const ContactPage = () => {
 
     const contactInfo = {
         address: "Jr. Dante 236, Lima 15047, Perú",
-        hours: "Lunes - Viernes: 8am - 6pm",
-        phone: "+511 644 0141",
-        whatsapp: "+511 961 555 000",
+        hours: "Lunes - Viernes: 8:00 AM - 5:00 PM",
+        phone: "644 0141",
+        whatsapp: "(+51) 933 634 055",
         email: "contacto@quimicaindustrial.pe"
     };
 

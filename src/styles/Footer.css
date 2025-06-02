@@ -1,26 +1,33 @@
 @import url('./variables.css');
 
+.footer-container {
+    width: 100%;
+    margin-left: -30px;
+}
+
 footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
+    max-width: var(--max-width);
+    width: 95%;
     margin: auto;
-    padding: 20px 0;
-  }
+    padding: 20px var(--content-padding);
+}
 
-  footer p, footer a {
+footer p, footer a {
     color: black !important;
-  }
-  
-  .footer-hr {
+}
+
+.footer-hr {
     border: none;
     height: 1px;
     background-color: #ccc;
     background: linear-gradient(to right, transparent, #ccc, transparent);
-    margin: -10px;
+    margin: 10px auto;
+    max-width: var(--max-width);
+    width: 95%;
 }
-  
 
 @media (max-width: 768px) {
     footer {
@@ -28,14 +35,13 @@ footer {
         align-items: center;
         text-align: center;
         margin-bottom: 100px;
+        padding: 20px var(--content-padding);
     }
     footer p, footer a {
         margin: 5px 0;
     }
     .footer-hr {
         margin: 10px 0;
-    }
-    .footer-hr {
-        width: 80%;
+        width: 95%;
     }
 }

@@ -117,23 +117,79 @@
 /* Categories Section */
 .homepage-categories {
   max-width: var(--max-width);
+  width: 95%;
   margin: 60px auto;
+  padding: 0 var(--content-padding);
 }
 
-/* Categories-Grid Layout */
+.category-section-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.category-grid-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
 .category-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    margin: -10px 0;
+    width: max-content;
+    transition: transform 0.5s ease;
 }
 
-.category-card,
-.first-category {
-  width: 100%;
-  height: 350px;
-  border-radius: var(--border-radius);
-  position: relative;
-  box-shadow: var(--box-shadow);
+.category-card {
+    flex: 0 0 280px;
+    height: 280px;
+    border-radius: var(--border-radius);
+    position: relative;
+    box-shadow: var(--box-shadow);
+    min-width: 280px;
+}
+
+.category-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.category-arrow:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.category-arrow.left-arrow {
+    left: 10px;
+}
+
+.category-arrow.right-arrow {
+    right: 10px;
+}
+
+.category-arrow svg {
+    width: 20px;
+    height: 20px;
+    color: #333;
 }
 
 .homepage-categories .btn {
@@ -157,11 +213,6 @@
   border-radius: 20px;
 }
 
-/* Flip Animation */
-.flip-card:hover .category-card-inner {
-  transform: rotateY(180deg);
-}
-
 /* Front Side - Ensure it fully covers the card */
 .category-card-front {
   position: absolute;
@@ -172,14 +223,28 @@
   border-radius: 20px;
   background-size: cover;
   background-position: center;
-  backface-visibility: hidden; /* Prevent flicker */
-  transition: filter 0.3s ease-in-out;
-  transform: translateZ(0); /* Force GPU acceleration */
+  backface-visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  transform: translateZ(0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Apply Blur to the Front Side ONLY on Hover */
-.flip-card:hover .category-card-front {
-  filter: blur(5px);
+.category-card-front::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease-in-out;
+}
+
+.flip-card:hover .category-card-front::before {
+background: rgba(22, 121, 47, 0.7);
 }
 
 .category-name {
@@ -188,53 +253,21 @@
   text-shadow: 1px 1px 2px #000;
   text-align: center;
   font-weight: bold;
-  position: absolute;
-  margin: 20px auto;
-  padding: 10px;
-}
-
-/* Back Side */
-.category-card-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transform: rotateY(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  backface-visibility: hidden; /* Ensure it's hidden during flip */
-}
-
-/* Dark Overlay on the Back Side */
-.category-card-back::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  z-index: 1;
-}
-
-.category-card-back .category-name {
   position: relative;
   z-index: 2;
+  margin: 20px auto;
+  padding: 10px;
+  width: 100%;
 }
 
-/* Ensure the text only appears once the flip is done */
-.flip-card:hover .category-card-back {
-  opacity: 1;
+/* Remove the flip animation */
+.flip-card:hover .category-card-inner {
+  transform: none;
+}
+
+/* Hide the back side since we're not using it */
+.category-card-back {
+  display: none;
 }
 
 /* Contact Section */
@@ -281,7 +314,7 @@
 }
 
 .contact-title strong {
-  color: #f02424;
+  color: #16792f;
 }
 
 .contact-description {
@@ -292,7 +325,7 @@
 }
 
 .contact-btn {
-  background-color: #f02424;
+  background-color: #16792f;
   color: white;
   padding: 12px 30px;
   border-radius: 30px;
@@ -319,6 +352,12 @@
   .homepage-contact {
     margin-left: 15px;
     margin-right: 15px;
+  }
+  
+  .category-card,
+  .first-category {
+    flex: 0 0 250px;
+    height: 250px;
   }
 }
 
@@ -375,6 +414,12 @@
   .contact-description {
     font-size: 0.9rem;
   }
+  
+  .category-card,
+  .first-category {
+    flex: 0 0 220px;
+    height: 220px;
+  }
 }
 
 @media screen and (max-width: var(--mobile)) {
@@ -384,14 +429,17 @@
   
   .category-grid {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
-    padding: 20px;
+    padding: 20px 10px;
+    margin: -10px;
+    overflow-x: auto;
   }
   
   .category-card,
   .first-category {
-    width: 100%;
+    flex: 0 0 200px;
+    height: 200px;
   }
   
   .hero-title {

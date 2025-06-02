@@ -1,22 +1,31 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { fetchCategories } from "../services/categoryService";
 import { analytics } from '../firebase';
 import { logEvent } from 'firebase/analytics';
 import { trackHeroCotizarClick, trackFeaturedCotizarClick } from '../utils/analytics';
 import BannerCarousel from "./BannerCarousel";
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import "../styles/HomePage.css";
 
 const HomePage = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showCategoryArrows, setShowCategoryArrows] = useState(false);
+    const categoryGridRef = useRef(null);
+    const scrollIntervalRef = useRef(null);
+    const [currentPosition, setCurrentPosition] = useState(0);
 
     const loadCategories = useCallback(async () => {
         try {
             setLoading(true);
             const data = await fetchCategories();
             setCategories(data);
+            // Set the CSS variable for total cards
+            if (categoryGridRef.current) {
+                categoryGridRef.current.style.setProperty('--total-cards', data.length);
+            }
         } catch (err) {
             setError("Error al cargar las categorías. Por favor, intente nuevamente.");
             console.error('Error loading categories:', err);
@@ -50,6 +59,73 @@ const HomePage = () => {
             trackFeaturedCotizarClick();
         }
         logEvent(analytics, 'click_cotiza_button', { source });
+    }, []);
+
+    const startAutoScroll = useCallback(() => {
+        if (!categoryGridRef.current || !Array.isArray(categories) || categories.length === 0) return;
+
+        scrollIntervalRef.current = setInterval(() => {
+            if (categoryGridRef.current) {
+                const cardWidth = 300; // card width + gap
+                const maxScroll = cardWidth * categories.length;
+                
+                setCurrentPosition(prev => {
+                    const newPosition = prev + 1;
+                    if (newPosition >= maxScroll) {
+                        return 0;
+                    }
+                    return newPosition;
+                });
+            }
+        }, 30); // Update every 30ms for smooth scrolling
+    }, [categories]);
+
+    const stopAutoScroll = useCallback(() => {
+        if (scrollIntervalRef.current) {
+            clearInterval(scrollIntervalRef.current);
+        }
+    }, []);
+
+    useEffect(() => {
+        startAutoScroll();
+        return () => stopAutoScroll();
+    }, [startAutoScroll, stopAutoScroll]);
+
+    useEffect(() => {
+        if (categoryGridRef.current) {
+            categoryGridRef.current.style.transform = `translateX(-${currentPosition}px)`;
+        }
+    }, [currentPosition]);
+
+    const handleMouseEnter = useCallback(() => {
+        setShowCategoryArrows(true);
+        stopAutoScroll();
+    }, [stopAutoScroll]);
+
+    const handleMouseLeave = useCallback(() => {
+        setShowCategoryArrows(false);
+        startAutoScroll();
+    }, [startAutoScroll]);
+
+    const nextCategory = useCallback(() => {
+        if (categoryGridRef.current) {
+            const cardWidth = 300; // card width + gap
+            setCurrentPosition(prev => {
+                const newPosition = prev + cardWidth;
+                const maxScroll = cardWidth * categories.length;
+                return newPosition >= maxScroll ? 0 : newPosition;
+            });
+        }
+    }, [categories.length]);
+
+    const prevCategory = useCallback(() => {
+        if (categoryGridRef.current) {
+            const cardWidth = 300; // card width + gap
+            setCurrentPosition(prev => {
+                const newPosition = prev - cardWidth;
+                return newPosition < 0 ? 0 : newPosition;
+            });
+        }
     }, []);
 
     const renderHeroSection = () => (
@@ -119,36 +195,6 @@ const HomePage = () => {
         </section>
     );
 
-    const renderCategoryCard = useCallback((category) => (
-        <Link
-            key={category._id}
-            to={`/productos?category=${encodeURIComponent(category.name)}`}
-            className="category-card flip-card"
-            aria-label={`Ver productos de la categoría ${category.name}`}
-        >
-            <div className="category-card-inner">
-                <div
-                    className="category-card-front"
-                    style={{
-                        backgroundImage: `url(${category.images?.site1})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                    role="img"
-                    aria-label={`Imagen de ${category.name}`}
-                />
-                <div
-                    className="category-card-back"
-                    style={{
-                        backgroundImage: `url(${category.images?.site1})`,
-                    }}
-                >
-                    <h4 className="category-name">{category.name}</h4>
-                </div>
-            </div>
-        </Link>
-    ), []);
-
     const renderCategoriesSection = () => {
         if (loading) {
             return (
@@ -171,20 +217,60 @@ const HomePage = () => {
 
         return (
             <section className="homepage-categories section-spacing" role="navigation">
-                <div className="category-grid">
-                    <div className="category-card first-category">
-                        <p className="category-label">
-                            <strong>Descubre nuestra<br /> gama de productos.</strong>
-                        </p>
-                        <p className="category-title">Categorías</p>
-                        <p className="category-description">
-                            Poseemos una gama de preservantes, Aditivos alimenticios, Reguladores de Acidez,
-                            Detergentes, Aceites Lubricantes, ácidos, Industria Textil, Industria Pesquera, entre otros.
-                        </p>
+                <h3 className="category-section-header">Líneas de Productos</h3>
+                <div 
+                    className="category-grid-container"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    <div 
+                        ref={categoryGridRef}
+                        className="category-grid"
+                    >
+                        {Array.isArray(categories) && categories
+                            .sort((a, b) => a.name.localeCompare(b.name))
+                            .map((category) => (
+                                <Link
+                                    key={category._id}
+                                    to={`/productos?category=${encodeURIComponent(category.name)}`}
+                                    className="category-card flip-card"
+                                    aria-label={`Ver productos de la categoría ${category.name}`}
+                                >
+                                    <div className="category-card-inner">
+                                        <div
+                                            className="category-card-front"
+                                            style={{
+                                                backgroundImage: `url(${category.images?.site1})`,
+                                                backgroundSize: "cover",
+                                                backgroundPosition: "center",
+                                            }}
+                                            role="img"
+                                            aria-label={`Imagen de ${category.name}`}
+                                        >
+                                            <h4 className="category-name">{category.name}</h4>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
                     </div>
-                    {Array.isArray(categories) && [...categories]
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map(renderCategoryCard)}
+                    {showCategoryArrows && (
+                        <>
+                            <button 
+                                className="category-arrow left-arrow" 
+                                onClick={prevCategory}
+                                aria-label="Categoría anterior"
+                            >
+                                <FaChevronLeft />
+                            </button>
+                            <button 
+                                className="category-arrow right-arrow" 
+                                onClick={nextCategory}
+                                aria-label="Categoría siguiente"
+                            >
+                                <FaChevronRight />
+                            </button>
+                        </>
+                    )}
                 </div>
                 <Link to="/productos" className="btn btn-primary" aria-label="Ver todos los productos">
                     Ver Productos
@@ -211,11 +297,15 @@ const HomePage = () => {
 
     return (
         <main role="main">
+             
             {renderHeroSection()}
+        
             <BannerCarousel />
+            {renderCategoriesSection()}
+           
             {renderAboutSection()}
             {renderFeaturedSection()}
-            {renderCategoriesSection()}
+            
             {renderContactSection()}
         </main>
     );

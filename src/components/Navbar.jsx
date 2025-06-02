@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaHeart, FaBox, FaPhone, FaClipboardList } from "react-icons/fa";
+import { FaHeart, FaBox, FaPhone, FaClipboardList, FaShoppingBasket } from "react-icons/fa";
 import LogoShort from "../assets/qiLogoShort.png";
-import Logo from "../assets/qiLogo.png";
+import Logo from "../assets/logoNuevo.png";
 import WishlistPopup from "./WishlistPopup";
 import { useWishlist } from "../contexts/WishlistContext";
 import "../styles/Navbar.css";
 import { trackNavbarCotizarClick, trackNavbarProductosClick } from '../utils/analytics';
+import SearchBar from "./SearchBar";
+import { fetchProducts } from "../services/productService";
 
 const Navbar = () => {
     const [showWishlist, setShowWishlist] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [currentPath, setCurrentPath] = useState('/');
+    const [products, setProducts] = useState([]);
     const { wishlist, removeFromWishlist } = useWishlist();
 
     const handleWishlistClick = () => setShowWishlist(!showWishlist);
@@ -29,6 +32,20 @@ const Navbar = () => {
         }
     }, []);
 
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const productsData = await fetchProducts();
+                if (Array.isArray(productsData)) {
+                    setProducts(productsData);
+                }
+            } catch (error) {
+                console.error('Error loading products for search:', error);
+            }
+        };
+        loadProducts();
+    }, []);
+
     const renderDesktopNavbar = () => (
         <div className="navbar-container">
             <nav className={currentPath === "/" ? "navbar-home" : "navbar-default"}>
@@ -43,8 +60,16 @@ const Navbar = () => {
                     <li><Link to="/contacto">Contacto</Link></li>
                     <li><Link to="/cotizar" onClick={trackNavbarCotizarClick}>Cotizar</Link></li>
                 </ul>
+                <div className="search-bar">
+                    <SearchBar variant="navbar" products={products} />
+                </div>
                 <div className="social-icons">
-                    <FaHeart className="heart-icon" onClick={handleWishlistClick} />
+                    <div className="basket-container">
+                        <FaShoppingBasket className="heart-icon" onClick={handleWishlistClick} />
+                        {wishlist.length > 0 && (
+                            <span className="basket-counter">{wishlist.length}</span>
+                        )}
+                    </div>
                     <WishlistPopup 
                         isOpen={showWishlist} 
                         onClose={() => setShowWishlist(false)} 
@@ -72,7 +97,12 @@ const Navbar = () => {
                 <Link to="/cotizar" onClick={trackNavbarCotizarClick}>
                     <FaClipboardList />
                 </Link>
-                <FaHeart className="heart-icon" onClick={handleWishlistClick} />
+                <div className="basket-container">
+                    <FaHeart className="heart-icon" onClick={handleWishlistClick} />
+                    {wishlist.length > 0 && (
+                        <span className="basket-counter">{wishlist.length}</span>
+                    )}
+                </div>
                 <WishlistPopup 
                     isOpen={showWishlist} 
                     onClose={() => setShowWishlist(false)} 

@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/qiLogo.png";
+import Logo from "../assets/logoNuevo.png";
 import "../styles/Footer.css";
 
 const Footer = () => {
@@ -8,13 +8,13 @@ const Footer = () => {
             <hr className="footer-hr" />
             <footer>
                 <div>
-                    <a href="/" target="_blank">
+                    <a href="/">
                         <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
                     </a>
                 </div>
                 <div>
-                    <p>+511 644 0141</p>
-                    <p>+511 961 555 000</p>
+                    <p>(+51) 1 644 0141</p>
+                    <p>(+51) 933 634 055</p>
                     <p>contacto@quimicaindustrial.pe</p>
                     <p>Jr. Dante 236, Lima 15047, Perú</p>
                 </div>
