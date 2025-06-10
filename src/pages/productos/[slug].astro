@@ -1,46 +1,79 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getProductBySlug } from '../../lib/products';
+import type { Product } from '../../types/product';
 
-export async function getStaticPaths() {
-    // This will be populated with actual product data
-    const products = [
-        // Example product - replace with your actual product data
-        {
-            slug: 'producto-ejemplo',
-            name: 'Producto Ejemplo',
-            description: 'Descripción detallada del producto',
-            image: '/images/products/example.jpg',
-            presentations: [
-                { name: 'Presentación 1', measure: '1L' },
-                { name: 'Presentación 2', measure: '5L' }
-            ],
-            categories: ['Categoría 1', 'Categoría 2'],
-            use: 'Usos específicos del producto'
-        }
-    ];
-
-    return products.map(product => ({
-        params: { slug: product.slug },
-        props: { product }
-    }));
+interface Props {
+    product: Product;
 }
 
-const { product } = Astro.props;
+interface ImportMetaEnv {
+    PUBLIC_API_URL: string;
+}
+
+declare global {
+    interface ImportMeta {
+        env: ImportMetaEnv;
+    }
+}
+
+export async function getStaticPaths() {
+    try {
+        const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/productos?site=site1`);
+        const { data: products } = await response.json();
+
+        return products.map((product: Product) => ({
+            params: { slug: product._id },
+            props: { product }
+        }));
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
+}
+
+const { product } = Astro.props as Props;
 
 // SEO metadata
-const title = `${product.name} | Química Industrial`;
-const description = product.description;
-const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`;
+const title = product.seo?.title || `${product.name} | Química Industrial`;
+const description = product.seo?.description || product.descriptions;
+const keywords = product.seo?.keywords?.join(', ') || '';
+const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product._id}`;
+
+// Prepare structured data
+const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.descriptions,
+    "image": product.images,
+    "offers": {
+        "@type": "AggregateOffer",
+        "offerCount": product.presentations.length,
+        "offers": product.presentations.map(p => ({
+            "@type": "Offer",
+            "name": p.name
+        }))
+    }
+} as const;
+
+// Add keywords to structured data if available
+if (product.seo?.keywords && product.seo.keywords.length > 0) {
+    (structuredData as any).keywords = product.seo.keywords.join(', ');
+}
 ---
 
-<Layout title={title} description={description} canonicalUrl={canonicalUrl}>
+<Layout 
+    title={title} 
+    description={description} 
+    canonicalUrl={canonicalUrl}
+    keywords={keywords}
+>
     <main class="product-page">
         <div class="container">
             <div class="product-grid">
                 <div class="product-image">
                     <img 
-                        src={product.image} 
+                        src={product.images} 
                         alt={product.name}
                         width="600"
                         height="400"
@@ -54,7 +87,7 @@ const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`
                             <h2>Presentaciones Disponibles</h2>
                             <ul>
                                 {product.presentations.map(p => (
-                                    <li>{p.name}{p.measure}</li>
+                                    <li>{p.name}</li>
                                 ))}
                             </ul>
                         </section>
@@ -63,19 +96,19 @@ const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`
                             <h2>Categorías</h2>
                             <ul>
                                 {product.categories.map(category => (
-                                    <li>{category}</li>
+                                    <li>{category.name}</li>
                                 ))}
                             </ul>
                         </section>
 
                         <section>
                             <h2>Descripción</h2>
-                            <p>{product.description}</p>
+                            <p>{product.descriptions}</p>
                         </section>
 
                         <section>
                             <h2>Usos</h2>
-                            <p>{product.use}</p>
+                            <p>{product.uses}</p>
                         </section>
                     </div>
                 </div>
@@ -105,20 +138,27 @@ const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`
         width: 100%;
         height: auto;
         border-radius: 8px;
+        object-fit: cover;
     }
 
     .product-info h1 {
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
+        color: #1e3c72;
     }
 
     .product-details section {
         margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .product-details h2 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
+        color: #1e3c72;
     }
 
     .product-details ul {
@@ -128,6 +168,10 @@ const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`
 
     .product-details li {
         margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     @media (max-width: 768px) {
@@ -137,20 +181,4 @@ const canonicalUrl = `https://quimicaindustrialpe.com/productos/${product.slug}`
     }
 </style>
 
-<script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": {product.name},
-        "description": {product.description},
-        "image": {product.image},
-        "offers": {
-            "@type": "AggregateOffer",
-            "offerCount": {product.presentations.length},
-            "offers": {product.presentations.map(p => ({
-                "@type": "Offer",
-                "name": p.name + p.measure
-            }))}
-        }
-    }
-</script> 
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} /> 
