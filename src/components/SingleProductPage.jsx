@@ -177,14 +177,35 @@ const SingleProductPage = () => {
             <div className="product-grid">
                 <div>
                     <ImageCarousel images={carouselImages} />
+                    <div className="referential-images-message" style={{margin: '8px 0 0 0', fontSize: '0.95rem', color: '#555', textAlign: 'center'}}>
+                        *Todas las imagenes son referenciales
+                    </div>
                 </div>
 
                 <div className="product-basic-info">
                     <h2>{product.name}</h2>
                     {product.presentations && product.presentations.length > 0 && (
-                        <div className="presentations">
+                        <div className="presentations" style={{ textAlign: 'left', color: '#222' }}>
                             <h3>Presentaciones Disponibles</h3>
                             <p>{product.presentations.map(p => `${p.name}`).join(", ")}</p>
+                        </div>
+                    )}
+                    {product.categories && product.categories.length > 0 && (
+                        <div className="categories" style={{ textAlign: 'left', color: '#222' }}>
+                            <h3>Categorías</h3>
+                            <p>{product.categories.map(c => c.name).join(", ")}</p>
+                        </div>
+                    )}
+                    {product.description && (
+                        <div className="description" style={{ textAlign: 'left', color: '#222' }}>
+                            <h3>Descripción</h3>
+                            <p>{product.description}</p>
+                        </div>
+                    )}
+                    {product.use && (
+                        <div className="uses" style={{ textAlign: 'left', color: '#222' }}>
+                            <h3>Usos</h3>
+                            <p>{product.use}</p>
                         </div>
                     )}
                     <div className="product-actions">
@@ -201,11 +222,6 @@ const SingleProductPage = () => {
                             Cotizar
                         </button>
                     </div>
-                </div>
-
-                <div className="product-details">
-                    {product.description && renderProductInfo("Descripción", product.description)}
-                    {product.use && renderProductInfo("Usos", product.use)}
                 </div>
             </div>
 

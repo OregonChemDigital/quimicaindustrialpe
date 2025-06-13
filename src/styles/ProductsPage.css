@@ -408,3 +408,13 @@
     margin: 0;
     transition: color 0.3s ease;
 }
+
+.category-filters > hr,
+.presentation-filters > hr {
+    display: block;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 16px;
+    width: 100%;
+}

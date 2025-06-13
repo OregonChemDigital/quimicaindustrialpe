@@ -263,7 +263,6 @@ const ProductsPage = () => {
                     <div className="filter-section">
                         <FaShoppingBasket className="heart-icon" />
                         <h3 className="filter-header">Agrega productos a la canasta de favoritos&nbsp;&nbsp;&nbsp;&nbsp;<br /> <strong>para solicitar una cotización</strong></h3>
-                        
                         <div className="filter-bar">
                             <label htmlFor="sort">Ordenar por:</label> <br />
                             <select id="sort" value={sortOption} onChange={handleSortChange}>
@@ -273,6 +272,9 @@ const ProductsPage = () => {
                                 <option value="recent">Recientemente añadidos</option>
                             </select>
                         </div>
+                    </div>
+                    <div className="referential-images-message" style={{margin: '8px 0 16px 0', fontSize: '0.95rem', color: '#555', textAlign: 'left'}}>
+                        *Todas las imagenes son referenciales
                     </div>
 
                     {filteredProducts.length > 0 ? (
@@ -315,17 +317,9 @@ const ProductsPage = () => {
                                             </div>
                                         )}
                                         <h2>{product.name}</h2>
-                                        <p>
-                                            <strong>Presentaciones Disponibles:</strong>
-                                            {product.presentations
-                                                .map(
-                                                    (presentation) =>
-                                                        `${presentation.name}`
-                                                )
-                                                .join(", ")}
-                                        </p>
                                         <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">
-                                            {wishlist.some(item => item._id === product._id) ? "Ya en tu canasta" : "Añadir a Favoritos"}&nbsp;&nbsp;
+                                            {wishlist.some(item => item._id === product._id) ? "Ya en tu canasta" : "Añadir a Favoritos"}
+                                            &nbsp;&nbsp;
                                             {wishlist.some(item => item._id === product._id) ? <FaCheck /> : <FaShoppingBasket />}
                                         </button>
                                     </div>

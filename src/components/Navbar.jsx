@@ -49,20 +49,16 @@ const Navbar = () => {
     const renderDesktopNavbar = () => (
         <div className="navbar-container">
             <nav className={currentPath === "/" ? "navbar-home" : "navbar-default"}>
-                <div>
-                    <Link to="/">
-                        <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
-                    </Link>
-                </div>
+                <Link to="/">
+                    <img className="logo" src={Logo.src} alt="Logo Química Industrial 2025" />
+                </Link>
                 <ul className="nav-list">
                     <li><Link to="/inicio">Inicio</Link></li>
                     <li><Link to="/productos" onClick={trackNavbarProductosClick}>Productos</Link></li>
                     <li><Link to="/contacto">Contacto</Link></li>
                     <li><Link to="/cotizar" onClick={trackNavbarCotizarClick}>Cotizar</Link></li>
                 </ul>
-                <div className="search-bar">
-                    <SearchBar variant="navbar" products={products} />
-                </div>
+                <SearchBar variant="navbar-unique" products={products} />
                 <div className="social-icons">
                     <div className="basket-container">
                         <FaShoppingBasket className="heart-icon" onClick={handleWishlistClick} />

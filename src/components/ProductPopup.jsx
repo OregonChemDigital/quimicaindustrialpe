@@ -2,10 +2,21 @@ import React from 'react';
 import '../styles/ProductPopup.css';
 import { Link, useNavigate } from 'react-router-dom';
 import ImageCarousel from './ImageCarousel';
+import { useWishlist } from '../contexts/WishlistContext';
 
 const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
     const navigate = useNavigate();
+    const { wishlist, addToWishlist } = useWishlist();
+
     const handleAddToWishlist = () => onAddToWishlist(product);
+
+    const handleCotizar = () => {
+        if (!wishlist.some(item => item._id === product._id)) {
+            addToWishlist(product);
+        }
+        onClose();
+        navigate('/cotizar');
+    };
 
     const handleViewDetails = () => {
         onClose();
@@ -34,23 +45,20 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
             <div className="popup-card" onClick={(e) => e.stopPropagation()}>
                 <div className="popup-left">
                     <ImageCarousel images={carouselImages} />
+                    <div className="referential-images-message" style={{margin: '8px 0 0 0', fontSize: '0.95rem', color: '#555', textAlign: 'center'}}>
+                        *Todas las imagenes son referenciales
+                    </div>
                 </div>
                 <div className="popup-right">
                     <h2>{product.name}</h2>
                     {product.presentations && product.presentations.length > 0 && (
-                        renderProductInfo(
-                            "Presentaciones Disponibles", 
-                            product.presentations.map(p =>`${p.name}`).join(", ")
-                        )
+                        <div style={{ textAlign: 'left' }}>
+                            {renderProductInfo(
+                                "Presentaciones Disponibles", 
+                                product.presentations.map(p =>`${p.name}`).join(", ")
+                            )}
+                        </div>
                     )}
-                    {product.categories && product.categories.length > 0 && (
-                        renderProductInfo(
-                            "Categorías", 
-                            product.categories.map(c => c.name).join(", ")
-                        )
-                    )}
-                    {renderProductInfo("Descripción", product.description)}
-                    {renderProductInfo("Usos", product.use)}
                     <div className="popup-actions">
                         <button 
                             className="btn-primary btn" 
@@ -63,6 +71,12 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
                             onClick={handleViewDetails}
                         >
                             Ver más detalles
+                        </button>
+                        <button 
+                            className="btn-secondary btn"
+                            onClick={handleCotizar}
+                        >
+                            Cotizar
                         </button>
                     </div>
                 </div>

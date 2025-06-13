@@ -72,6 +72,13 @@ const HomePage = () => {
                 setCurrentPosition(prev => {
                     const newPosition = prev + 1;
                     if (newPosition >= maxScroll) {
+                        // Reset to beginning without animation
+                        categoryGridRef.current.style.transition = 'none';
+                        setTimeout(() => {
+                            if (categoryGridRef.current) {
+                                categoryGridRef.current.style.transition = 'transform 0.3s ease-out';
+                            }
+                        }, 50);
                         return 0;
                     }
                     return newPosition;
@@ -113,7 +120,17 @@ const HomePage = () => {
             setCurrentPosition(prev => {
                 const newPosition = prev + cardWidth;
                 const maxScroll = cardWidth * categories.length;
-                return newPosition >= maxScroll ? 0 : newPosition;
+                if (newPosition >= maxScroll) {
+                    // Reset to beginning without animation
+                    categoryGridRef.current.style.transition = 'none';
+                    setTimeout(() => {
+                        if (categoryGridRef.current) {
+                            categoryGridRef.current.style.transition = 'transform 0.3s ease-out';
+                        }
+                    }, 50);
+                    return 0;
+                }
+                return newPosition;
             });
         }
     }, [categories.length]);
@@ -123,10 +140,21 @@ const HomePage = () => {
             const cardWidth = 300; // card width + gap
             setCurrentPosition(prev => {
                 const newPosition = prev - cardWidth;
-                return newPosition < 0 ? 0 : newPosition;
+                if (newPosition < 0) {
+                    // Jump to the end of the first set without animation
+                    const maxScroll = cardWidth * categories.length;
+                    categoryGridRef.current.style.transition = 'none';
+                    setTimeout(() => {
+                        if (categoryGridRef.current) {
+                            categoryGridRef.current.style.transition = 'transform 0.3s ease-out';
+                        }
+                    }, 50);
+                    return maxScroll - cardWidth;
+                }
+                return newPosition;
             });
         }
-    }, []);
+    }, [categories.length]);
 
     const renderHeroSection = () => (
         <section className="homepage-hero section-spacing" role="banner">
@@ -215,6 +243,12 @@ const HomePage = () => {
             );
         }
 
+        // Sort categories and create a duplicated array for infinite scroll
+        const sortedCategories = Array.isArray(categories) 
+            ? [...categories].sort((a, b) => a.name.localeCompare(b.name))
+            : [];
+        const duplicatedCategories = [...sortedCategories, ...sortedCategories];
+
         return (
             <section className="homepage-categories section-spacing" role="navigation">
                 <h3 className="category-section-header">Líneas de Productos</h3>
@@ -227,31 +261,29 @@ const HomePage = () => {
                         ref={categoryGridRef}
                         className="category-grid"
                     >
-                        {Array.isArray(categories) && categories
-                            .sort((a, b) => a.name.localeCompare(b.name))
-                            .map((category) => (
-                                <Link
-                                    key={category._id}
-                                    to={`/productos?category=${encodeURIComponent(category.name)}`}
-                                    className="category-card flip-card"
-                                    aria-label={`Ver productos de la categoría ${category.name}`}
-                                >
-                                    <div className="category-card-inner">
-                                        <div
-                                            className="category-card-front"
-                                            style={{
-                                                backgroundImage: `url(${category.images?.site1})`,
-                                                backgroundSize: "cover",
-                                                backgroundPosition: "center",
-                                            }}
-                                            role="img"
-                                            aria-label={`Imagen de ${category.name}`}
-                                        >
-                                            <h4 className="category-name">{category.name}</h4>
-                                        </div>
+                        {duplicatedCategories.map((category, index) => (
+                            <Link
+                                key={`${category._id}-${index}`}
+                                to={`/productos?category=${encodeURIComponent(category.name)}`}
+                                className="category-card flip-card"
+                                aria-label={`Ver productos de la categoría ${category.name}`}
+                            >
+                                <div className="category-card-inner">
+                                    <div
+                                        className="category-card-front"
+                                        style={{
+                                            backgroundImage: `url(${category.images?.site1})`,
+                                            backgroundSize: "cover",
+                                            backgroundPosition: "center",
+                                        }}
+                                        role="img"
+                                        aria-label={`Imagen de ${category.name}`}
+                                    >
+                                        <h4 className="category-name">{category.name}</h4>
                                     </div>
-                                </Link>
-                            ))}
+                                </div>
+                            </Link>
+                        ))}
                     </div>
                     {showCategoryArrows && (
                         <>

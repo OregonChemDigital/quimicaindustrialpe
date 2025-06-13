@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import { WishlistProvider } from "./contexts/WishlistContext";
 import WhatsappButton from "./components/WhatsappButton";
 import "./styles/index.css";
+import "./styles/App.css";
+import "./styles/global.css";
 
 const AppWrapper = () => (
     <WishlistProvider>
