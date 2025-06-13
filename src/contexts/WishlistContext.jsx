@@ -30,26 +30,51 @@ export const WishlistProvider = ({ children }) => {
 
     const addToWishlist = (product) => {
         setWishlist(prevWishlist => {
+            if (!product || !product._id) {
+                console.error('Invalid product:', product);
+                return prevWishlist;
+            }
+
             if (prevWishlist.some(item => item._id === product._id)) {
                 return prevWishlist;
             }
+
             const updatedList = [...prevWishlist, product];
-            localStorage.setItem('wishlist', JSON.stringify(updatedList));
+            
+            try {
+                localStorage.setItem('wishlist', JSON.stringify(updatedList));
+            } catch (error) {
+                console.error('Error saving wishlist to localStorage:', error);
+            }
+
             safeLogEvent('add_to_wishlist', {
                 product_id: product._id,
                 product_name: product.name
             });
+
             return updatedList;
         });
     };
 
     const removeFromWishlist = (productId) => {
         setWishlist(prevWishlist => {
+            if (!productId) {
+                console.error('Invalid productId:', productId);
+                return prevWishlist;
+            }
+
             const updatedList = prevWishlist.filter(item => item._id !== productId);
-            localStorage.setItem('wishlist', JSON.stringify(updatedList));
+            
+            try {
+                localStorage.setItem('wishlist', JSON.stringify(updatedList));
+            } catch (error) {
+                console.error('Error saving wishlist to localStorage:', error);
+            }
+
             safeLogEvent('remove_from_wishlist', {
                 product_id: productId
             });
+
             return updatedList;
         });
     };

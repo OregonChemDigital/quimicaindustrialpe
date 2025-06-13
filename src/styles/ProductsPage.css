@@ -152,6 +152,14 @@
     text-align: center;
     position: relative;
     min-height: 450px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .product-card img {
@@ -237,6 +245,7 @@
     height: 250px;
     overflow: hidden;
     margin-bottom: 5px;
+    border-radius: 10px;
 }
 
 .product-image {
@@ -244,11 +253,29 @@
     height: 100%;
     object-fit: cover;
     margin-bottom: 5px;
-    transition: filter 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    border-radius: 20px;
 }
 
 .image-container:hover .product-image {
-    filter: blur(4px);
+    filter: brightness(0.7);
+}
+
+.image-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(22, 121, 47, 0);
+    transition: background 0.3s ease-in-out;
+    z-index: 1;
+    border-radius: 20px;
+}
+
+.image-container:hover::before {
+    background: rgba(22, 121, 47, 0.7);
 }
 
 /* Buttons */

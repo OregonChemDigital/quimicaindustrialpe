@@ -175,12 +175,26 @@ const ProductsPage = () => {
     };
 
     const handleAddToWishlist = (product) => {
+        // Ensure we have a valid product with _id
+        if (!product || !product._id) {
+            console.error('Invalid product:', product);
+            return;
+        }
+
         const alreadyInWishlist = wishlist.some(item => item._id === product._id);
 
         if (alreadyInWishlist) {
             setSuccessMessage(`${product.name} ya se encuentra en tu lista de favoritos`);
         } else {
-            addToWishlist(product);
+            // Make sure we're adding the complete product object
+            const productToAdd = {
+                ...product,
+                _id: product._id,
+                name: product.name,
+                image: product.image,
+                presentations: product.presentations
+            };
+            addToWishlist(productToAdd);
             setSuccessMessage(`${product.name} añadido a favoritos`);
         }
         setShowSuccess(true);

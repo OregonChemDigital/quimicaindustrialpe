@@ -23,8 +23,8 @@ export async function getStaticPaths() {
 
         return products.map((product: Product) => ({
             params: { slug: product._id },
-            props: { product }
-        }));
+        props: { product }
+    }));
     } catch (error) {
         console.error('Error fetching products:', error);
         return [];

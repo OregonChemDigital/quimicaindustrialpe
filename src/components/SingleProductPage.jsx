@@ -5,7 +5,9 @@ import ImageCarousel from './ImageCarousel';
 import SearchBar from './SearchBar';
 import { useWishlist } from '../contexts/WishlistContext';
 import BannerCarousel from './BannerCarousel';
+import SuccessMessage from './SuccessMessage';
 import '../styles/SingleProductPage.css';
+import '../styles/SuccessMessage.css';
 
 const SingleProductPage = () => {
     const { slug } = useParams();
@@ -14,6 +16,8 @@ const SingleProductPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
     const { wishlist, addToWishlist } = useWishlist();
 
     useEffect(() => {
@@ -61,13 +65,58 @@ const SingleProductPage = () => {
     };
 
     const handleAddToWishlist = () => {
-        addToWishlist(product);
+        // Ensure we have a valid product with _id
+        if (!product || !product._id) {
+            console.error('Invalid product:', product);
+            return;
+        }
+
+        const alreadyInWishlist = wishlist.some(item => item._id === product._id);
+
+        if (alreadyInWishlist) {
+            setSuccessMessage(`${product.name} ya se encuentra en tu lista de favoritos`);
+        } else {
+            // Make sure we're adding the complete product object
+            const productToAdd = {
+                ...product,
+                _id: product._id,
+                name: product.name,
+                image: product.image,
+                presentations: product.presentations
+            };
+            addToWishlist(productToAdd);
+            setSuccessMessage(`${product.name} añadido a favoritos`);
+        }
+        setShowSuccess(true);
+        setTimeout(() => {
+            setShowSuccess(false);
+            setSuccessMessage("");
+        }, 3000);
     };
 
     const handleCotizar = () => {
+        // Ensure we have a valid product with _id
+        if (!product || !product._id) {
+            console.error('Invalid product:', product);
+            return;
+        }
+
         // Add the current product to the wishlist if it's not already there
         if (!wishlist.some(item => item._id === product._id)) {
-            addToWishlist(product);
+            const productToAdd = {
+                ...product,
+                _id: product._id,
+                name: product.name,
+                image: product.image,
+                presentations: product.presentations
+            };
+            addToWishlist(productToAdd);
+            setSuccessMessage(`${product.name} añadido a favoritos`);
+            setShowSuccess(true);
+            setTimeout(() => {
+                setShowSuccess(false);
+                setSuccessMessage("");
+            }, 3000);
         }
         // Navigate to the quote page
         navigate('/cotizar');
@@ -143,7 +192,7 @@ const SingleProductPage = () => {
                             className="btn-primary"
                             onClick={handleAddToWishlist}
                         >
-                            Añadir a Favoritos
+                            {wishlist.some(item => item._id === product._id) ? "Ya en tu canasta" : "Añadir a Favoritos"}
                         </button>
                         <button 
                             className="btn-secondary"
@@ -170,6 +219,13 @@ const SingleProductPage = () => {
             </div>
 
             <BannerCarousel />
+            {showSuccess && (
+                <SuccessMessage
+                    message={successMessage}
+                    onClose={() => setShowSuccess(false)}
+                    duration={3000}
+                />
+            )}
         </div>
     );
 };
