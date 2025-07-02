@@ -18,13 +18,19 @@ declare global {
 
 export async function getStaticPaths() {
     try {
-        const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/productos?site=site1`);
-        const { data: products } = await response.json();
+        const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/public/productos?site=site1`);
+        const json = await response.json();
+        const products = json.data;
 
-        return products.map((product: Product) => ({
+        if (!Array.isArray(products)) {
+            console.error('No products array in API response:', json);
+            return [];
+        }
+
+        return products.map((product) => ({
             params: { slug: product._id },
-        props: { product }
-    }));
+            props: { product }
+        }));
     } catch (error) {
         console.error('Error fetching products:', error);
         return [];
