@@ -317,6 +317,11 @@ const ProductsPage = () => {
                                             </div>
                                         )}
                                         <h2>{product.name}</h2>
+                                        {product.price && (
+                                            <div className="product-price">
+                                                <strong>S/. {product.price.toFixed(2)}</strong>
+                                            </div>
+                                        )}
                                         <button onClick={() => handleAddToWishlist(product)} className="btn btn-primary btn-add-product ">
                                             {wishlist.some(item => item._id === product._id) ? "Ya en tu canasta" : "Añadir a Favoritos"}
                                             &nbsp;&nbsp;

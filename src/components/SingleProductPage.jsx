@@ -145,8 +145,9 @@ const SingleProductPage = () => {
     }
 
     // Collect images for the carousel: product image + presentation images
+    // Only include product image if it exists, then add presentation images
     const carouselImages = [
-        product.image,
+        ...(product.image ? [product.image] : []), // Only include product image if it exists
         ...(product.presentations || [])
             .map(p => p.image)
             .filter(Boolean)
@@ -184,6 +185,11 @@ const SingleProductPage = () => {
 
                 <div className="product-basic-info">
                     <h2>{product.name}</h2>
+                    {product.price && (
+                        <div className="product-price">
+                            <h3>Precio: S/. {product.price.toFixed(2)}</h3>
+                        </div>
+                    )}
                     {product.presentations && product.presentations.length > 0 && (
                         <div className="presentations" style={{ textAlign: 'left', color: '#222' }}>
                             <h3>Presentaciones Disponibles</h3>

@@ -33,8 +33,9 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
     };
 
     // Collect images for the carousel: product image + presentation images
+    // Only include product image if it exists, then add presentation images
     const carouselImages = [
-        product.image, // Main product image (site1)
+        ...(product.image ? [product.image] : []), // Only include product image if it exists
         ...(product.presentations || [])
             .map(p => p.image) // Get site1 images from presentations
             .filter(Boolean) // Remove any null/undefined values
@@ -51,6 +52,11 @@ const ProductPopup = ({ product, onClose, onAddToWishlist }) => {
                 </div>
                 <div className="popup-right">
                     <h2>{product.name}</h2>
+                    {product.price && (
+                        <div className="product-price">
+                            <strong>Precio: S/. {product.price.toFixed(2)}</strong>
+                        </div>
+                    )}
                     {product.presentations && product.presentations.length > 0 && (
                         <div style={{ textAlign: 'left' }}>
                             {renderProductInfo(

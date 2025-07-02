@@ -418,3 +418,34 @@
     margin-bottom: 16px;
     width: 100%;
 }
+
+/* Product Price Styles */
+.product-price {
+    margin: 8px 0;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-price strong {
+    color: white;
+}
+
+/* Ensure price doesn't interfere with existing layout */
+.product-card .product-price {
+    margin: 8px 0;
+    order: 2;
+}
+
+.product-card h2 {
+    order: 1;
+}
+
+.product-card .btn {
+    order: 3;
+}

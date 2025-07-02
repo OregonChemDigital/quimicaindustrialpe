@@ -87,6 +87,7 @@ export const fetchProducts = async () => {
             image: product.images?.site1 || '',
             description: product.descriptions?.site1 || '',
             use: product.uses?.site1 || '',
+            price: product.prices?.site1 || null,
             slug: product.name.toLowerCase().replace(/\s+/g, '-'),
             createdAt: product.createdAt
         }));
@@ -129,6 +130,7 @@ export const fetchProductBySlug = async (slug) => {
             image: product.images?.site1 || '',
             description: product.descriptions?.site1 || '',
             use: product.uses?.site1 || '',
+            price: product.prices?.site1 || null,
             slug: product.name.toLowerCase().replace(/\s+/g, '-'),
             createdAt: product.createdAt
         };

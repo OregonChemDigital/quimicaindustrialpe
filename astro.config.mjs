@@ -5,7 +5,7 @@ import "./src/styles/index.css"
 export default defineConfig({
     integrations: [react()],
     output: 'static',
-    base: '/quimicaindustrialpe/',
+    base: '/',
     build: {
         format: 'directory'
     }

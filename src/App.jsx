@@ -22,7 +22,7 @@ const AppWrapper = () => (
 );
 
 const ClientApp = () => (
-    <BrowserRouter basename="/quimicaindustrialpe" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AppWrapper />
     </BrowserRouter>
 );

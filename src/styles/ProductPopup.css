@@ -145,4 +145,26 @@
         min-width: 100%;
     }
 }
+
+.popup-right h2 {
+    margin-bottom: 1rem;
+    color: #1e3c72;
+    font-size: 1.8rem;
+}
+
+.product-price {
+    margin: 1rem 0;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-price strong {
+    color: white;
+}
   

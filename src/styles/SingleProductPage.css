@@ -66,6 +66,24 @@
     margin: 0;
 }
 
+.product-price {
+    margin: 1rem 0;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-price h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.3rem;
+}
+
 .presentations h3 {
     font-size: 1.2rem;
     color: black;

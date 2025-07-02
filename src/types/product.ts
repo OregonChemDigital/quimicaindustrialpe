@@ -4,6 +4,7 @@ export interface Product {
     descriptions: string;
     images: string;
     uses: string;
+    price: number | null;
     presentations: {
         name: string;
     }[];
