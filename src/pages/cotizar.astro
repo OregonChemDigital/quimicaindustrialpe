@@ -4,7 +4,8 @@ import { ClientApp } from '../App.jsx';
 // SEO metadata
 const title = "Química Industrial - Cotizar";
 const description = "Solicita una cotización personalizada para nuestros productos químicos industriales. Nuestro equipo te responderá a la brevedad.";
-const canonicalUrl = "http://localhost:4321/cotizar";
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+const canonicalUrl = `${siteUrl}/cotizar`;
 ---
 
 <!DOCTYPE html>
