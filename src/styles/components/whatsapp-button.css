@@ -1,37 +1,104 @@
-/* Whatsapp Button */
+/* ========================================
+   WHATSAPP BUTTON COMPONENT STYLES
+   ======================================== */
 
+/* WhatsApp Button */
 .whatsapp-button {
-  position: fixed;
-  bottom: var(--space-10);
-  right: var(--space-10);
-  background-color: var(--color-success);
-  color: var(--color-text-inverse);
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-5xl);
-  z-index: var(--z-fixed);
-  box-shadow: var(--shadow-lg);
-  transition: all var(--transition-base);
-  text-decoration: none;
+  position: fixed !important;
+  bottom: var(--space-10) !important;
+  right: calc(50% - var(--container-max-width) / 2 + var(--container-padding)) !important;
+  background-color: #17792f !important;
+  color: var(--color-text-inverse) !important;
+  border-radius: 50% !important;
+  width: 80px !important;
+  height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: var(--text-5xl) !important;
+  z-index: var(--z-fixed) !important;
+  box-shadow: var(--shadow-lg) !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
 }
 
 .whatsapp-button:hover {
-  background-color: var(--color-success-600);
-  transform: scale(1.1);
-  box-shadow: var(--shadow-xl);
+  background-color: #1a8a36 !important;
+  transform: scale(1.1) !important;
+  box-shadow: var(--shadow-xl) !important;
 }
 
-/* Responsive Design */
+.whatsapp-button:active {
+  transform: scale(0.95) !important;
+}
+
+/* Pulse Animation Keyframes */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Alternative Animation Method */
+.whatsapp-button {
+  transition: all 0.3s ease;
+}
+
+.whatsapp-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: rgba(23, 121, 47, 0.3);
+  animation: ripple 2s infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .whatsapp-button {
+    right: calc(50% - var(--container-max-width) / 2 + var(--space-4)) !important;
+  }
+}
+
 @media (max-width: 768px) {
   .whatsapp-button {
-    width: 70px;
-    height: 70px;
-    font-size: var(--text-4xl);
-    bottom: 90px;
-    right: var(--space-8);
+    width: 70px !important;
+    height: 70px !important;
+    font-size: var(--text-4xl) !important;
+    bottom: var(--space-8) !important;
+    right: calc(50% - var(--container-max-width) / 2 + var(--space-3)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-button {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: var(--text-3xl) !important;
+    bottom: var(--space-6) !important;
+    right: calc(50% - var(--container-max-width) / 2 + var(--space-2)) !important;
   }
 }

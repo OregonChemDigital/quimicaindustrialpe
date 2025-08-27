@@ -55,8 +55,8 @@
   --color-primary-200: #bbf7d0;
   --color-primary-300: #86efac;
   --color-primary-400: #4ade80;
-  --color-primary-500: #16792f;  /* Main brand color */
-  --color-primary-600: #16a34a;
+  --color-primary-500: #17792f;  /* Main brand color - Company logo green */
+  --color-primary-600: #1a8a36;  /* Hover state - slightly darker */
   --color-primary-700: #15803d;
   --color-primary-800: #166534;
   --color-primary-900: #14532d;
@@ -83,8 +83,9 @@
   --color-info: #3b82f6;
   
   /* Success Color Variants */
-  --color-success-500: #10b981;
-  --color-success-600: #059669;
+  --color-success: #17792f;
+  --color-success-500: #17792f;
+  --color-success-600: #1a8a36;
   
   /* Error Color Variants */
   --color-error-50: #fef2f2;
