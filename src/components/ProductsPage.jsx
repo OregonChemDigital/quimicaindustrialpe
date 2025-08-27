@@ -241,7 +241,14 @@ const ProductsPage = () => {
 
     return (
         <div className="products-page">
-            {/* <h1 className="page-title">Catálogo de Productos</h1> */}
+            {/* ===== 1. HERO SECTION ===== */}
+            <div className="products-hero">
+                <div className="hero-content">
+                    <h1 className="hero-title">Catálogo de Productos</h1>
+                    <p className="hero-subtitle">Descubre nuestra amplia gama de productos químicos industriales de alta calidad</p>
+                </div>
+            </div>
+            
             <div className="content-layout">
 
                 {/* Sidebar */}

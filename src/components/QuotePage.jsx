@@ -431,7 +431,13 @@ Dirección: [Dirección física]`;
 
     return (
         <div className={`quote-page ${isSubmitting ? 'dimmed' : ''}`}>
-            <h1 className="page-title">Formulario de Cotización</h1>
+            {/* ===== 1. HERO SECTION ===== */}
+            <div className="quote-hero">
+                <div className="hero-content">
+                    <h1 className="hero-title">Formulario de Cotización</h1>
+                    <p className="hero-subtitle">Solicita una cotización personalizada para tus productos químicos industriales</p>
+                </div>
+            </div>
 
             {isSubmitting && (
                 <div className="loading-overlay">

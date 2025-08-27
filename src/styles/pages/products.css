@@ -6,6 +6,37 @@
   padding: var(--space-5);
 }
 
+/* ===== 1. HERO SECTION ===== */
+.products-hero {
+  background: linear-gradient(135deg, rgba(23, 121, 47, 0.1), rgba(23, 121, 47, 0.05));
+  padding: var(--space-16) var(--space-5);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border-primary);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.products-hero .hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.products-hero .hero-title {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-tight);
+}
+
+.products-hero .hero-subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .content-layout {
   display: grid;
   grid-template-columns: 1fr 3fr;
