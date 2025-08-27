@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 
+
 const SideBar = ({
     onSearch,
     onCategoryChange,

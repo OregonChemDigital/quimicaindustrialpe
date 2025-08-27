@@ -1,6 +1,9 @@
 import React from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import '../styles/WhatsappButton.css';
+
+
+import { analytics } from '../firebase/firebase';
+import { logEvent } from 'firebase/analytics';
 
 const WhatsappButton = () => {
     return (

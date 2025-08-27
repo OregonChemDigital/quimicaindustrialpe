@@ -1,0 +1,182 @@
+/* ========================================
+   FOOTER COMPONENT STYLES
+   ======================================== */
+
+/* Footer Container */
+.footer-container {
+  width: 100%;
+  padding: 0 var(--container-padding);
+  box-sizing: border-box;
+  margin-top: var(--space-16);
+}
+
+/* Footer Divider */
+.footer-hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right, 
+    transparent, 
+    var(--color-border-primary), 
+    transparent
+  );
+  margin: var(--space-2) auto;
+  max-width: var(--container-max-width);
+  width: 95%;
+}
+
+/* Main Footer */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: var(--container-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-8) var(--container-padding);
+  box-sizing: border-box;
+}
+
+/* Footer Sections */
+footer > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Logo Section - Left Positioned */
+footer > div:first-child {
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+footer > div:first-child a {
+  display: block;
+  transition: transform var(--transition-base);
+}
+
+footer > div:first-child a:hover {
+  transform: scale(1.05);
+}
+
+.logo {
+  height: 80px;
+  width: auto;
+  max-width: 240px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Contact Information - Center */
+footer > div:nth-child(2) {
+  align-items: center;
+  text-align: center;
+}
+
+/* Company Information - Right */
+footer > div:nth-child(3) {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Footer Text and Links */
+footer p,
+footer a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  transition: color var(--transition-base);
+}
+
+footer a:hover {
+  color: var(--color-primary-500);
+}
+
+/* Footer Links */
+footer a[target="_blank"] {
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-primary);
+  text-underline-offset: 2px;
+}
+
+footer a[target="_blank"]:hover {
+  text-decoration-color: var(--color-primary-500);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  footer {
+    padding: var(--space-6) var(--container-padding);
+  }
+  
+  .logo {
+    height: 70px;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 0 var(--space-3);
+    margin-top: var(--space-12);
+  }
+  
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-3);
+    margin-bottom: var(--space-20);
+  }
+  
+  footer > div {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  footer > div:first-child {
+    order: 1;
+  }
+  
+  footer > div:nth-child(2) {
+    order: 2;
+  }
+  
+  footer > div:nth-child(3) {
+    order: 3;
+  }
+  
+  .logo {
+    height: 60px;
+    max-width: 180px;
+  }
+  
+  .footer-hr {
+    margin: var(--space-2) 0;
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    padding: var(--space-5) var(--space-3);
+    gap: var(--space-5);
+  }
+  
+  .logo {
+    height: 50px;
+    max-width: 150px;
+  }
+  
+  footer p,
+  footer a {
+    font-size: var(--text-sm);
+  }
+}

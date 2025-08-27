@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/ImageCarousel.css';
+
+
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ImageCarousel = ({ images }) => {

@@ -1,65 +1,56 @@
 ---
-import { ClientApp } from '../App';
+import { ClientApp } from '../App.jsx';
 
 // SEO metadata
 const title = "Química Industrial - Inicio";
-const description = "Somos una empresa líder en la distribución de productos químicos industriales en Perú. Ofrecemos soluciones químicas de alta calidad para diversas industrias.";
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+const description = "Venta de productos químicos en el Perú. Productos químicos y lubricantes industriales para industrias y particulares.";
+const siteUrl = 'http://localhost:4321';
 const canonicalUrl = `${siteUrl}/`;
 ---
 
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
-		<meta name="generator" content={Astro.generator} />
-		
-		<!-- Primary Meta Tags -->
-		<title>{title}</title>
-		<meta name="title" content={title} />
-		<meta name="description" content={description} />
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={canonicalUrl} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={`${canonicalUrl}/og-image.jpg`} />
-		
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={canonicalUrl} />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={`${canonicalUrl}/og-image.jpg`} />
-		
-		<!-- Canonical URL -->
-		<link rel="canonical" href={canonicalUrl} />
-		
-		<!-- Structured Data -->
-		<script type="application/ld+json">
-			{JSON.stringify({
-				"@context": "https://schema.org",
-				"@type": "Organization",
-				"name": "Química Industrial",
-				"url": canonicalUrl,
-				"description": description,
-				"address": {
-					"@type": "PostalAddress",
-					"addressCountry": "PE"
-				}
-			})}
-		</script>
-	</head>
-	<body>
-		<ClientApp client:only="react" />
-	</body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content={title} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+        {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Inicio",
+            "url": canonicalUrl,
+            "description": description
+        })}
+    </script>
+</head>
+<body>
+    <ClientApp client:only="react" />
+</body>
 </html>

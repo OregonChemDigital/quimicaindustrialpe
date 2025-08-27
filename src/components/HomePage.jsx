@@ -6,7 +6,8 @@ import { logEvent } from 'firebase/analytics';
 import { trackHeroCotizarClick, trackFeaturedCotizarClick } from '../utils/analytics';
 import BannerCarousel from "./BannerCarousel";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import "../styles/HomePage.css";
+
+
 
 const HomePage = () => {
     const [categories, setCategories] = useState([]);

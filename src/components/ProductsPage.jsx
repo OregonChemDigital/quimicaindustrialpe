@@ -9,8 +9,8 @@ import { useWishlist } from "../contexts/WishlistContext";
 import BannerCarousel from "./BannerCarousel";
 import LoadingSpinner from "./LoadingSpinner";
 import SuccessMessage from "./SuccessMessage";
-import "../styles/ProductsPage.css";
-import "../styles/SuccessMessage.css";
+
+
 import { FaHeart, FaEye, FaChevronLeft, FaChevronRight, FaShoppingBasket, FaCheck } from "react-icons/fa";
 
 const useQuery = () => {

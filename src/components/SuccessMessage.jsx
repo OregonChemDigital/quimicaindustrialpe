@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/SuccessMessage.css';
+
+
 
 const SuccessMessage = ({ message, onClose, duration = 3000 }) => {
   const [isVisible, setIsVisible] = useState(true);

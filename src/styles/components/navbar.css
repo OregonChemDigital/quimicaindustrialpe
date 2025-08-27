@@ -1,0 +1,242 @@
+/* ========================================
+   NAVBAR COMPONENT STYLES
+   ======================================== */
+
+/* Navbar Container */
+.navbar-container {
+  width: 100%;
+  margin-top: var(--space-10);
+  margin-bottom: var(--space-5);
+  padding: 0 var(--container-padding);
+  box-sizing: border-box;
+}
+
+/* Main Navigation */
+nav {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 64px;
+  width: 100%;
+  padding: 0 var(--container-padding);
+  box-sizing: border-box;
+}
+
+/* Logo Section - Left Positioned */
+nav > a:first-child {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: transform var(--transition-base);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation Links - Center */
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  list-style: none;
+  flex-shrink: 0;
+}
+
+.nav-list li {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-list li a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  text-decoration: none;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Navigation Link Hover Effects */
+.nav-list li a:hover {
+  color: var(--color-primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Right Section - Search and Social Icons */
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 100%;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Basket Container */
+.basket-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-base);
+  transition: all var(--transition-base);
+}
+
+.basket-container:hover {
+  background-color: var(--color-bg-secondary);
+  transform: scale(1.05);
+}
+
+.heart-icon {
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+  transition: color var(--transition-base);
+}
+
+.basket-container:hover .heart-icon {
+  color: var(--color-primary-500);
+}
+
+/* Basket Counter */
+.basket-counter {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--color-primary-500);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Navbar Divider */
+.navbar-hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right, 
+    transparent, 
+    var(--color-border-primary), 
+    transparent
+  );
+  margin: 0 auto;
+  max-width: var(--container-max-width);
+  width: 95%;
+}
+
+/* ========================================
+   MOBILE NAVBAR STYLES
+   ======================================== */
+
+.mobile-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--container-padding);
+  background-color: var(--color-bg-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.mobile-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.mobile-icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.mobile-icons a,
+.mobile-icons .basket-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-base);
+  transition: all var(--transition-base);
+}
+
+.mobile-icons a:hover,
+.mobile-icons .basket-container:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-primary-500);
+  transform: scale(1.05);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .nav-list {
+    gap: var(--space-6);
+  }
+  
+  .nav-list li a {
+    font-size: var(--text-xl);
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+  
+  nav {
+    padding: 0 var(--space-3);
+  }
+  
+  .nav-list {
+    display: none;
+  }
+  
+  .social-icons {
+    display: none;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.navbar-home .nav-list li a {
+  color: var(--color-text-primary);
+}
+
+.navbar-default .nav-list li a {
+  color: var(--color-text-primary);
+}

@@ -1,0 +1,134 @@
+/* ========================================
+   CSS MIXINS & UTILITIES
+   ========================================
+   
+   Reusable CSS patterns and mixins
+   ======================================== */
+
+/* Flexbox Mixins */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Grid Mixins */
+.grid-center {
+  display: grid;
+  place-items: center;
+}
+
+.grid-2-cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+.grid-3-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Spacing Mixins */
+.section-padding {
+  padding: var(--space-16) 0;
+}
+
+.container-padding {
+  padding: 0 var(--space-5);
+}
+
+/* Typography Mixins */
+.text-heading {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary);
+}
+
+.text-body {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* Button Mixins */
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Card Mixins */
+.card-base {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+/* Form Mixins */
+.form-input-base {
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  transition: all var(--transition-base);
+  width: 100%;
+}
+
+.form-input-base:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+/* Responsive Mixins */
+@media (max-width: 768px) {
+  .grid-2-cols,
+  .grid-3-cols {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-padding {
+    padding: var(--space-8) 0;
+  }
+  
+  .container-padding {
+    padding: 0 var(--space-3);
+  }
+}

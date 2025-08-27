@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
-import { analytics } from "./firebase";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { WishlistProvider } from "./contexts/WishlistContext";
 import WhatsappButton from "./components/WhatsappButton";
-import "./styles/index.css";
-import "./styles/App.css";
-import "./styles/global.css";
+
+// Import the organized CSS architecture
+import "./styles/main.css";
 
 const AppWrapper = () => (
     <WishlistProvider>

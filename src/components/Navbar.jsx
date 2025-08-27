@@ -5,7 +5,7 @@ import LogoShort from "../assets/qiLogoShort.png";
 import Logo from "../assets/logoNuevo.png";
 import WishlistPopup from "./WishlistPopup";
 import { useWishlist } from "../contexts/WishlistContext";
-import "../styles/Navbar.css";
+
 import { trackNavbarCotizarClick, trackNavbarProductosClick } from '../utils/analytics';
 import SearchBar from "./SearchBar";
 import { fetchProducts } from "../services/productService";

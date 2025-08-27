@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import '../styles/TopContactBar.css';
+
+
 
 const TopContactBar = () => {
     const [isVisible, setIsVisible] = useState(true);

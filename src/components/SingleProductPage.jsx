@@ -6,8 +6,8 @@ import SearchBar from './SearchBar';
 import { useWishlist } from '../contexts/WishlistContext';
 import BannerCarousel from './BannerCarousel';
 import SuccessMessage from './SuccessMessage';
-import '../styles/SingleProductPage.css';
-import '../styles/SuccessMessage.css';
+
+
 
 const SingleProductPage = () => {
     const { slug } = useParams();

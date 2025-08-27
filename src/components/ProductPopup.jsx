@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ProductPopup.css';
+
 import { Link, useNavigate } from 'react-router-dom';
 import ImageCarousel from './ImageCarousel';
 import { useWishlist } from '../contexts/WishlistContext';

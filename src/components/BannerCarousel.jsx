@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import useBannerData from '../services/bannerService';
 import LoadingSpinner from './LoadingSpinner';
-import "../styles/BannerCarousel.css";
+
+
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const BannerCarousel = () => {

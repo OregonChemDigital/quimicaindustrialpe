@@ -1,8 +1,11 @@
-import { logAnalyticsEvent } from '../firebase';
+import { analytics } from '../firebase/firebase';
+import { logEvent } from 'firebase/analytics';
 
 export const safeLogEvent = (eventName, eventParams = {}) => {
     try {
-        logAnalyticsEvent(eventName, eventParams);
+        if (analytics) {
+            logEvent(analytics, eventName, eventParams);
+        }
     } catch (error) {
         // Only log errors in development
         if (process.env.NODE_ENV === 'development') {

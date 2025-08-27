@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/QuotePage.css";
+
 import { fetchProducts } from "../services/productService";
 import { useWishlist } from "../contexts/WishlistContext"; // Import the Wishlist context
 import { safeLogEvent } from "../utils/analytics";

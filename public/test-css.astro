@@ -1,0 +1,197 @@
+---
+// Astro page for CSS testing - Simple version without React
+---
+
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS System Test - Química Industrial</title>
+    
+    <!-- CSS from public directory - Using bundled CSS for better performance -->
+    <link rel="stylesheet" href="/styles/bundle.css" />
+    
+    <!-- Inline test styles -->
+    <style>
+        .inline-test {
+            background-color: red !important;
+            color: white !important;
+            padding: 20px !important;
+            margin: 20px !important;
+            border: 3px solid blue !important;
+        }
+        
+        /* Test select styles inline to see if CSS variables are the issue */
+        .test-select-inline {
+            padding: 12px 16px !important;
+            border: 2px solid #e5e7eb !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            color: #1f2937 !important;
+            background-color: white !important;
+            width: 100% !important;
+            margin-top: 8px !important;
+        }
+        
+        /* Debug: Test if basic CSS works without variables */
+        .debug-select {
+            padding: 12px 16px !important;
+            border: 2px solid #e5e7eb !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            color: #1f2937 !important;
+            background-color: white !important;
+            width: 100% !important;
+            margin-top: 8px !important;
+        }
+        
+        /* Debug: Test if CSS variables are working */
+        .debug-variables {
+            background-color: #16792f !important;
+            color: white !important;
+            padding: 20px !important;
+            margin: 20px 0 !important;
+            border-radius: 8px !important;
+        }
+        
+        /* Debug: Force form-select styles to see if variables work */
+        .form-select {
+            background-color: #ffffff !important;
+            border: 2px solid #e5e7eb !important;
+            color: #1f2937 !important;
+            padding: 12px 16px !important;
+            border-radius: 8px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Inline style test -->
+    <div class="inline-test">
+        <strong>INLINE STYLE TEST - If you see this with red background and blue border, CSS is working!</strong>
+    </div>
+    
+    <!-- Debug: Test if CSS variables are working -->
+    <div class="debug-variables">
+        <strong>DEBUG: CSS Variables Test - If you see this with green background, variables are working!</strong>
+    </div>
+    
+    <div class="test-page">
+        <h1 class="test-page-title">
+            CSS System Test - Simple Version
+        </h1>
+        
+        <div class="test-grid">
+            <!-- Button System Test -->
+            <div class="test-card">
+                <h2 class="test-card-title">Button System</h2>
+                <div class="test-card-content">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-secondary">Secondary Button</button>
+                    <button class="btn btn-ghost">Ghost Button</button>
+                    <button class="btn btn-outline">Outline Button</button>
+                    <button class="btn btn-danger">Danger Button</button>
+                    <button class="btn btn-success">Success Button</button>
+                </div>
+            </div>
+
+            <!-- Button Sizes Test -->
+            <div class="test-card">
+                <h2 class="test-card-title">Button Sizes</h2>
+                <div class="test-card-content">
+                    <button class="btn btn-primary btn-sm">Small</button>
+                    <button class="btn btn-primary">Medium</button>
+                    <button class="btn btn-primary btn-lg">Large</button>
+                    <button class="btn btn-primary btn-xl">Extra Large</button>
+                </div>
+            </div>
+
+            <!-- Icon Buttons Test -->
+            <div class="test-card">
+                <h2 class="test-card-title">Icon Buttons</h2>
+                <div class="test-card-content">
+                    <button class="btn btn-primary btn-icon btn-sm">+</button>
+                    <button class="btn btn-primary btn-icon">+</button>
+                    <button class="btn btn-primary btn-icon btn-lg">+</button>
+                    <button class="btn btn-primary btn-icon btn-xl">+</button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner Test (CSS only) -->
+            <div class="test-card">
+                <h2 class="test-card-title">Loading Spinner (CSS)</h2>
+                <div class="test-card-content">
+                    <div class="loading-container">
+                        <div class="loading-spinner spinner-small"></div>
+                    </div>
+                    <div class="loading-container">
+                        <div class="loading-spinner spinner-medium"></div>
+                    </div>
+                    <div class="loading-container">
+                        <div class="loading-spinner spinner-large"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card System Test -->
+            <div class="test-card">
+                <h2 class="test-card-title">Card System</h2>
+                <div class="test-card-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-header-title">Test Card</h3>
+                            <p class="card-header-subtitle">Testing our CSS system</p>
+                        </div>
+                        <div class="card-body">
+                            <p>This card should be styled with our new CSS system.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Action</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Elements Test -->
+            <div class="test-card">
+                <h2 class="test-card-title">Form Elements</h2>
+                <div class="test-card-content">
+                    <form class="form">
+                        <div class="form-group">
+                            <label class="form-label">Test Input</label>
+                            <input type="text" class="form-input" placeholder="Type something..." />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Test Select</label>
+                            <select class="form-select">
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                                <option>Option 3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Test Select (Inline Styles)</label>
+                            <select class="test-select-inline">
+                                <option>Option A</option>
+                                <option>Option B</option>
+                                <option>Option C</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Debug Select (Basic CSS)</label>
+                            <select class="debug-select">
+                                <option>Debug 1</option>
+                                <option>Debug 2</option>
+                                <option>Debug 3</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

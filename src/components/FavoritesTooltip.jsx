@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/FavoritesTooltip.css';
+
+
 import { FaShoppingBasket, FaTimes } from 'react-icons/fa';
 
 const FavoritesTooltip = ({ onClose }) => {

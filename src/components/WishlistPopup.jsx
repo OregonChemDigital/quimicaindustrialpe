@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { analytics } from '../firebase'; // Updated path
+import { analytics } from '../firebase/firebase';
 import { logEvent } from 'firebase/analytics';
 import { trackWishlistCotizarClick, trackWishlistPopupOpen } from '../utils/analytics';
 import LoadingSpinner from './LoadingSpinner';
 import SuccessMessage from './SuccessMessage';
-import '../styles/WishlistPopup.css';
+
+
 
 const WishlistPopup = ({ isOpen, onClose, items, onRemoveItem }) => {
     const navigate = useNavigate();

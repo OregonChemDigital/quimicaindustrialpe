@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../styles/SearchBar.css';
+
+
 import { trackSearch } from '../utils/analytics';
 import { FaSearch } from 'react-icons/fa';
 

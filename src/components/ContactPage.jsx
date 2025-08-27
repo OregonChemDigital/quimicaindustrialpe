@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { SocialIcon } from "react-social-icons";
 import { trackPageView, safeLogEvent } from '../utils/analytics';
 import LoadingSpinner from './LoadingSpinner';
-import "../styles/ContactPage.css";
+
+
 
 const ContactPage = () => {
     const [isLoading, setIsLoading] = useState(true);
