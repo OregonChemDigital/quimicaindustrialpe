@@ -7,8 +7,6 @@ import { trackHeroCotizarClick, trackFeaturedCotizarClick } from '../utils/analy
 import BannerCarousel from "./BannerCarousel";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-
-
 const HomePage = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -158,16 +156,19 @@ const HomePage = () => {
     }, [categories.length]);
 
     const renderHeroSection = () => (
-        <section className="homepage-hero section-spacing" role="banner">
+        <section className="homepage-hero" role="banner">
             <div className="hero-content">
                 <h1 className="hero-title">
                     Venta de Productos <br />
                     Químicos en el Perú
                 </h1>
-                <p className="hero-description">Lorem ipsum dolor sit amet consectetur adipiscing</p>
+                <p className="hero-description">
+                    Soluciones químicas confiables para industrias y particulares. 
+                    Productos de calidad con respaldo de Oregon Chem Group.
+                </p>
                 <Link
                     to="/cotizar"
-                    className="hero-btn btn btn-primary"
+                    className="btn btn-primary btn-xl"
                     onClick={() => handleCotizarClick('hero')}
                     aria-label="Cotizar productos químicos"
                 >
@@ -178,7 +179,7 @@ const HomePage = () => {
     );
 
     const renderAboutSection = () => (
-        <section className="homepage-about section-spacing" role="complementary">
+        <section className="homepage-about" role="complementary">
             <div className="about-text">
                 <p className="about-label">Nosotros</p>
                 <h2 className="about-title">¿Quiénes Somos?</h2>
@@ -190,7 +191,7 @@ const HomePage = () => {
                     y lubricantes industriales para<br />
                     <strong>industrias</strong> y <strong>particulares</strong> en el Perú
                 </p>
-                <Link to="/conocer" className="btn btn-primary" aria-label="Conocer más sobre nosotros">
+                <Link to="/conocer" className="btn btn-primary btn-xl" aria-label="Conocer más sobre nosotros">
                     Conoce Más
                 </Link>
             </div>
@@ -198,7 +199,7 @@ const HomePage = () => {
     );
 
     const renderFeaturedSection = () => (
-        <section className="homepage-featured section-spacing" role="complementary">
+        <section className="homepage-featured" role="complementary">
             <div className="featured-text">
                 <p className="featured-label">INSUMOS PARA LA INDUSTRIA</p>
                 <p className="featured-title">
@@ -213,7 +214,7 @@ const HomePage = () => {
                 </p>
                 <Link
                     to="/cotizar"
-                    className="featured-btn btn btn-primary"
+                    className="btn btn-primary btn-xl"
                     onClick={() => handleCotizarClick('featured')}
                     aria-label="Cotizar productos químicos desde la sección destacada"
                 >
@@ -227,7 +228,7 @@ const HomePage = () => {
     const renderCategoriesSection = () => {
         if (loading) {
             return (
-                <section className="homepage-categories section-spacing" role="status">
+                <section className="homepage-categories" role="status">
                     <p>Cargando categorías...</p>
                 </section>
             );
@@ -235,7 +236,7 @@ const HomePage = () => {
 
         if (error) {
             return (
-                <section className="homepage-categories section-spacing" role="alert">
+                <section className="homepage-categories" role="alert">
                     <p>{error}</p>
                     <button onClick={loadCategories} className="btn btn-primary">
                         Reintentar
@@ -251,7 +252,7 @@ const HomePage = () => {
         const duplicatedCategories = [...sortedCategories, ...sortedCategories];
 
         return (
-            <section className="homepage-categories section-spacing" role="navigation">
+            <section className="homepage-categories" role="navigation">
                 <h3 className="category-section-header">Líneas de Productos</h3>
                 <div 
                     className="category-grid-container"
@@ -305,7 +306,7 @@ const HomePage = () => {
                         </>
                     )}
                 </div>
-                <Link to="/productos" className="btn btn-primary" aria-label="Ver todos los productos">
+                <Link to="/productos" className="btn btn-primary btn-xl" aria-label="Ver todos los productos">
                     Ver Productos
                 </Link>
             </section>
@@ -313,7 +314,7 @@ const HomePage = () => {
     };
 
     const renderContactSection = () => (
-        <section className="homepage-contact section-spacing" role="complementary">
+        <section className="homepage-contact" role="complementary">
             <div className="contact-text">
                 <p className="contact-label">QUÍMICA INDUSTRIAL PERÚ</p>
                 <h3 className="contact-title">Ponte en contacto <strong>con nosotros.</strong></h3>
@@ -321,24 +322,23 @@ const HomePage = () => {
                     Cuéntanos qué necesitas y te ayudaremos a encontrar la<br />
                     solución química ideal. Escríbenos y trabajemos juntos!
                 </p>
-                <Link to="/contacto" className="contact-btn btn btn-primary" aria-label="Contactar a Química Industrial Perú">
+                <Link to="/contacto" className="btn btn-primary btn-xl" aria-label="Contactar a Química Industrial Perú">
                     Contáctanos
                 </Link>
             </div>
+            <div className="contact-image" role="img" aria-label="Imagen de contacto"></div>
         </section>
     );
 
     return (
         <main role="main">
-             
             {renderHeroSection()}
-        
-            <BannerCarousel />
+            <div className="homepage-banner-carousel">
+                <BannerCarousel />
+            </div>
             {renderCategoriesSection()}
-           
             {renderAboutSection()}
             {renderFeaturedSection()}
-            
             {renderContactSection()}
         </main>
     );
