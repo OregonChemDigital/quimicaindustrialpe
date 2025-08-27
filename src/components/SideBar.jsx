@@ -71,12 +71,12 @@ const SideBar = ({
     return (
         <div className="sidebar-container">
             <div className="search-bar-container">
-                <div className="search-bar">
+                <div className="search-bar navbar">
                     <input
                         type="text"
                         value={searchTerm}
                         onChange={handleInputChange}
-                        className="dropdown-input"
+                        className="search-input"
                         placeholder={placeholder}
                     />
                     <FaSearch className="search-icon" />
