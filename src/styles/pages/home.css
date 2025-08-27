@@ -104,6 +104,9 @@
   text-decoration: none;
   transition: all var(--transition-base);
   box-shadow: var(--shadow-lg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .category-card:hover {
@@ -116,16 +119,35 @@
   height: 100%;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   padding: var(--space-4);
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  position: relative;
 }
 
 .category-name {
   color: var(--color-text-inverse);
   font-size: var(--text-lg);
-  font-weight: var(--font-weight-semibold);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  font-weight: var(--font-weight-bold);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
   margin: 0;
+  position: relative;
+  z-index: 2;
+  transition: all var(--transition-base);
+  text-align: center;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-card:hover .category-name {
+  transform: scale(1.05);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .category-arrow {

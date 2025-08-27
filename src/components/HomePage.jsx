@@ -269,15 +269,13 @@ const HomePage = () => {
                                 to={`/productos?category=${encodeURIComponent(category.name)}`}
                                 className="category-card flip-card"
                                 aria-label={`Ver productos de la categoría ${category.name}`}
+                                style={{
+                                    backgroundImage: `url(${category.images?.site1})`,
+                                }}
                             >
                                 <div className="category-card-inner">
                                     <div
                                         className="category-card-front"
-                                        style={{
-                                            backgroundImage: `url(${category.images?.site1})`,
-                                            backgroundSize: "cover",
-                                            backgroundPosition: "center",
-                                        }}
                                         role="img"
                                         aria-label={`Imagen de ${category.name}`}
                                     >
